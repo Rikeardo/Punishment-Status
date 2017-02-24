@@ -5,7 +5,6 @@
 // @author       _Rikardo_
 // @match        https://hypixel.net/threads/*
 // @require      https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js
-//@updateURL     https://github.com/Rikeardo/Punishment-Status/raw/master/PunishmentStatusForums.user.js
 // ==/UserScript==
 
 if(document.getElementsByClassName("titleBar")[0].innerHTML.includes("Report Rule Breakers"));
