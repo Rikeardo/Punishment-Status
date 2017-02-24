@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Punishment status - Forums
-// @version      0.2
+// @version      1.0
 // @description  Check if a player is currently punished from the server, from forums
 // @author       _Rikardo_
 // @match        https://hypixel.net/threads/*
