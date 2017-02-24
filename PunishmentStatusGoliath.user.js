@@ -6,7 +6,6 @@
 // @include     https://goliath.hypixel.net/userinfo?*
 // @include     https://goliath.hypixel.net/userinfo#*
 // @include     https://goliath.hypixel.net/userinfo
-//@updateURL    https://github.com/Rikeardo/Punishment-Status/raw/master/PunishmentStatusGoliath.user.js
 // ==/UserScript==
 
 setInterval(function()
