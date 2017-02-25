@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Punishment status - Forums
-// @version      0.2
+// @version      0.3
 // @description  Check if a player is currently punished from the server, from forums
 // @author       _Rikardo_
 // @match        https://hypixel.net/threads/*
@@ -18,9 +18,9 @@ if(document.getElementsByClassName("titleBar")[0].innerHTML.includes("Report Rul
 
         var currentCheck = arr[number];
 
-        if(currentCheck.includes("Reason:") === false && currentCheck.includes("reason:") === false && currentCheck.includes("Reason :") === false && currentCheck.includes("reason :") === false)
+        if(currentCheck.includes("Reason:") === false && currentCheck.includes("reason:") === false && currentCheck.includes("Reason :") === false && currentCheck.includes("reason :") === false && currentCheck.includes("reason -") === false && currentCheck.includes("Reason -") === false)
         {
-            getRemoved = [" ","<b>","</b>","<br>","</br>","<ul>","</ul>","<li>","</li>",":","In-Game","Name","name","IGN","rulebreaker","Theruleviolator(s)."];
+            getRemoved = [" ","<b>","</b>","<br>","</br>","<ul>","</ul>","<li>","</li>","In-Game","In-game","Name","name","IGN","rulebreaker","Theruleviolator(s).","ign:",":","-"];
             var current_i = 0;
             while(current_i+1 <= getRemoved.length)
             {
@@ -94,7 +94,7 @@ setInterval(function()
     }
 }, 200);
 
-var version = 0.2;
+var version = 0.3;
 var request = new XMLHttpRequest();
 request.onreadystatechange = function() {
     if (request.readyState == XMLHttpRequest.DONE) {
