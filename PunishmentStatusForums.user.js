@@ -94,7 +94,7 @@ setInterval(function()
     }
 }, 200);
 
-var version = 0.1;
+var version = 0.2;
 var request = new XMLHttpRequest();
 request.onreadystatechange = function() {
     if (request.readyState == XMLHttpRequest.DONE) {
