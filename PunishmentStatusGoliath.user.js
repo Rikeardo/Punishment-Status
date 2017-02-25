@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Punishment status - Goliath
-// @version      0.1
+// @version      0.2
 // @description  Check if a player is currently punished from the server, from forums
 // @author       _Rikardo_
 // @include     https://goliath.hypixel.net/userinfo?*
@@ -24,7 +24,7 @@ setInterval(function()
     if(cookie.includes("banCheckingLoaded="))
     {
         document.cookie = "banCheckingLoaded=; expires=Thu, 01 Jan 1970 00:00:00 UTC;domain=.hypixel.net; path=/;";
-        
+
         if(document.body.innerHTML.includes("Network Level"))
         {
             var muteReason = "";
@@ -36,10 +36,10 @@ setInterval(function()
                 var startBanCut = bans.indexOf("<br>");
                 var endBanCut = bans.indexOf("By:");
                 var cutBan = bans.substring(startBanCut+5, endBanCut);
-              
+
                 var endBanReason = cutBan.indexOf("<br>");
                 banReason = "Banned:" + cutBan.substring(8, endBanReason)+",";
-                
+
                 console.log(banReason);
             }
             if(mutes.includes("Current Mute"))
@@ -47,10 +47,10 @@ setInterval(function()
                 var startMuteCut = mutes.indexOf("<br>");
                 var endMuteCut = mutes.indexOf("By:");
                 var cutMute = mutes.substring(startMuteCut+5, endMuteCut);
-              
+
                 var endMuteReason = cutMute.indexOf("<br>");
                 muteReason = "Muted:" + cutMute.substring(8, endMuteReason) + "&";
-                
+
                 console.log(muteReason);
             }
             document.cookie = "banCheckingAnswer='"+/([A-Za-z0-9_]{1,16})$/.exec($("#columnx > font:first-of-type").text())[1]+ "'"+banReason+muteReason+"END0FANSW3R; domain=.hypixel.net;path=/";
@@ -61,3 +61,19 @@ setInterval(function()
         }
     }
 }, 500);
+
+var version = 0.2;
+var request = new XMLHttpRequest();
+request.onreadystatechange = function() {
+    if (request.readyState == XMLHttpRequest.DONE) {
+        var updatedScriptVersion = request.responseText;
+        if(version < updatedScriptVersion)
+        {
+            console.log("Update script");
+            window.location.href = "https://github.com/Rikeardo/Punishment-Status/raw/master/PunishmentStatusGoliath.user.js";
+        }
+    }
+};
+request.open('GET', 'https://raw.githubusercontent.com/Rikeardo/Punishment-Status/master/GoliathVersion.json', true);
+request.send(null);
+
