@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name         Punishment status - Forums
-// @version      0.3
+// @version      0.31
 // @description  Check if a player is currently punished from the server, from forums
 // @author       _Rikardo_
 // @match        https://hypixel.net/threads/*
 // @require     https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js
 // ==/UserScript==
 
-if(document.getElementsByClassName("titleBar")[0].innerHTML.includes("Report Rule Breakers"));
+if(document.getElementsByClassName("titleBar")[0].innerHTML.includes("Report Rule Breakers"))
 {
     var content = $('.messageText').html();
     var arr = content.split('\n');
@@ -18,9 +18,9 @@ if(document.getElementsByClassName("titleBar")[0].innerHTML.includes("Report Rul
 
         var currentCheck = arr[number];
 
-        if(currentCheck.includes("Reason:") === false && currentCheck.includes("reason:") === false && currentCheck.includes("Reason :") === false && currentCheck.includes("reason :") === false && currentCheck.includes("reason -") === false && currentCheck.includes("Reason -") === false)
+        if(currentCheck.includes("Reason:") === false && currentCheck.includes("reason:") === false && currentCheck.includes("Reason :") === false && currentCheck.includes("reason :") === false && currentCheck.includes("reason -") === false && currentCheck.includes("Reason -") === false && currentCheck.includes("Offence:") === false && currentCheck.includes("offence:") === false && currentCheck.includes("Rank:") === false && currentCheck.includes("rank:") === false)
         {
-            getRemoved = [" ","<b>","</b>","<br>","</br>","<ul>","</ul>","<li>","</li>","In-Game","In-game","Name","name","IGN","rulebreaker","Theruleviolator(s).","ign:",":","-"];
+            getRemoved = [" ","<b>","</b>","<br>","</br>","<ul>","</ul>","<li>","</li>","In-Game","In-game","Name","name","IGN","rulebreaker","Theruleviolator(s).","ign:","Ign:","typeofhacks","Typeofhacks","in-game",":","-"];
             var current_i = 0;
             while(current_i+1 <= getRemoved.length)
             {
@@ -31,6 +31,10 @@ if(document.getElementsByClassName("titleBar")[0].innerHTML.includes("Report Rul
                 current_i += 1;
             }
             nameContainer += currentCheck;
+        }
+        else
+        {
+            number += 100;
         }
         number += 1;
     }
@@ -94,7 +98,7 @@ setInterval(function()
     }
 }, 200);
 
-var version = 0.3;
+var version = 0.31;
 var request = new XMLHttpRequest();
 request.onreadystatechange = function() {
     if (request.readyState == XMLHttpRequest.DONE) {
