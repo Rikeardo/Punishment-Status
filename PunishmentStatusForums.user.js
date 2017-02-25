@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         Punishment status - Forums
-// @version      0.1
+// @version      0.2
 // @description  Check if a player is currently punished from the server, from forums
 // @author       _Rikardo_
 // @match        https://hypixel.net/threads/*
-// @require      https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js
+// @require     https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js
 // ==/UserScript==
 
 if(document.getElementsByClassName("titleBar")[0].innerHTML.includes("Report Rule Breakers"));
@@ -20,7 +20,7 @@ if(document.getElementsByClassName("titleBar")[0].innerHTML.includes("Report Rul
 
         if(currentCheck.includes("Reason:") === false && currentCheck.includes("reason:") === false && currentCheck.includes("Reason :") === false && currentCheck.includes("reason :") === false)
         {
-            getRemoved = [" ","<b>","</b>","<br>","</br>","<ul>","</ul>","<li>","</li>",":","In-Game","Name","name","IGN","rulebreaker"];
+            getRemoved = [" ","<b>","</b>","<br>","</br>","<ul>","</ul>","<li>","</li>",":","In-Game","Name","name","IGN","rulebreaker","Theruleviolator(s)."];
             var current_i = 0;
             while(current_i+1 <= getRemoved.length)
             {
@@ -49,12 +49,12 @@ setInterval(function()
     if(cookieAnswer.includes("banCheckingAnswer="))
     {
         document.cookie = "banCheckingAnswer=; expires=Thu, 01 Jan 1970 00:00:00 UTC;domain=.hypixel.net; path=/;";
-        
+
         var start = cookieAnswer.indexOf("banCheckingAnswer=");
         var end = cookieAnswer.lastIndexOf("END0FANSW3R");
         var info = cookieAnswer.substring(start+19, end);
         console.log(info);
-        
+
         var endName = info.indexOf("'");
         var usernameInfo = info.substring(0, endName);
         if(info.includes("Banned:")||info.includes("Muted:"))
@@ -88,9 +88,23 @@ setInterval(function()
         else
         {
             $("<div style='height: 40px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: lightgreen;'>"+usernameInfo+" is not punished.</div>").insertAfter(".pageNavLinkGroup:first");
-            
+
         }
 
     }
 }, 200);
 
+var version = 0.1;
+var request = new XMLHttpRequest();
+request.onreadystatechange = function() {
+    if (request.readyState == XMLHttpRequest.DONE) {
+        var updatedScriptVersion = request.responseText;
+        if(version < updatedScriptVersion)
+        {
+            console.log("Update script");
+            window.location.href = "https://github.com/Rikeardo/Punishment-Status/raw/master/PunishmentStatusForums.user.js";
+        }
+    }
+};
+request.open('GET', 'https://raw.githubusercontent.com/Rikeardo/Punishment-Status/master/ForumVersion.json', true);
+request.send(null);
