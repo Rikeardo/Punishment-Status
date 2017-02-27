@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Punishment status - Forums
-// @version      0.4
+// @version      0.5
 // @description  Check if a player is currently punished from the server, from forums
 // @author       _Rikardo_
 // @match        https://hypixel.net/threads/*
@@ -116,7 +116,7 @@ setInterval(function()
     }
 }, 200);
 
-var version = 0.4;
+var version = 0.5;
 var forumUpdateRequest = new XMLHttpRequest();
 forumUpdateRequest.onreadystatechange = function() {
     if (forumUpdateRequest.readyState == XMLHttpRequest.DONE) {
