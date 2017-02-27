@@ -1,6 +1,6 @@
 #Punishment Status Goliath
 
-##Version 0.1
+##Version 0.2
 
 * Added updating feature
 
