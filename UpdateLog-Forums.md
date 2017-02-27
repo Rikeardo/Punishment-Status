@@ -1,4 +1,10 @@
 #Punishment status Forums
+##Version 0.4 PLANNED
+* Multi-thread support
+* New keywords
+* Refined keyword searching
+* Feedback if user does not exist
+* Timeout cookies
 
 ###Version 0.31
 * Added new keywords
