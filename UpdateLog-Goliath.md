@@ -2,4 +2,9 @@
 
 ##Version 0.1
 
-Initial implementation
+*Added updating feature
+
+##Version 0.1
+
+*Initial implementation
+
