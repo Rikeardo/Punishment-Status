@@ -1,5 +1,11 @@
 #Punishment status Goliath
 
+##Version 0.3 PLANNED
+* Multi-thread support
+* Feedback if user does not exist
+* Timeout cookies
+* Better handling of requests
+
 ##Version 0.2
 
 * Added updating feature
