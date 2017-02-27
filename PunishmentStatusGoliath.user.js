@@ -61,7 +61,7 @@ setInterval(function()
             timeGA += 10 * 1000;
             nowGA.setTime(timeGA);
             document.cookie = "loadedBanChecking"+forumKeyLoaded+"=; expires=Thu, 01 Jan 1970 00:00:00 UTC;domain=.hypixel.net; path=/;";
-            document.cookie = "banCheckingAnswer"+forumKeyLoaded+"='Does not existEND0FANSW3R; expires=" + nowGA.toUTCString() +"; domain=.hypixel.net;path=/";
+            document.cookie = "answerBanChecking"+forumKeyLoaded+"='Does not existEND0FANSW3R; expires=" + nowGA.toUTCString() +"; domain=.hypixel.net;path=/";
             window.location.href = "https://goliath.hypixel.net/userinfo";
         }
     }
