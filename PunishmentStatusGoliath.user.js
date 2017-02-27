@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Punishment status - Goliath
-// @version      0.3
+// @version      0.4
 // @description  Check if a player is currently punished from the server, from forums
 // @author       _Rikardo_
 // @include     https://goliath.hypixel.net/userinfo?*
@@ -85,7 +85,7 @@ setInterval(function()
     }
 }, 600);
 
-var version = 0.3;
+var version = 0.4;
 var request = new XMLHttpRequest();
 request.onreadystatechange = function() {
     if (request.readyState == XMLHttpRequest.DONE) {
