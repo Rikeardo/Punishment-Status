@@ -1,4 +1,4 @@
-#Punishment Status Goliath
+#Punishment status Goliath
 
 ##Version 0.2
 
