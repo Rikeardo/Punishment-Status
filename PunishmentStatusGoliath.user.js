@@ -51,7 +51,7 @@ setInterval(function()
             var timeG = nowG.getTime();
             timeG += 10 * 1000;
             nowG.setTime(timeG);
-            document.cookie = "banCheckingAnswer"+forumKeyLoaded+"='"+/([A-Za-z0-9_]{1,16})$/.exec($("#columnx > font:first-of-type").text())[1]+ "'"+banReason+muteReason+"END0FANSW3R; expires=" + nowG.toUTCString() +"; domain=.hypixel.net;path=/";
+            document.cookie = "answerBanChecking"+forumKeyLoaded+"='"+/([A-Za-z0-9_]{1,16})$/.exec($("#columnx > font:first-of-type").text())[1]+ "'"+banReason+muteReason+"END0FANSW3R; expires=" + nowG.toUTCString() +"; domain=.hypixel.net;path=/";
         }
         else
         {
