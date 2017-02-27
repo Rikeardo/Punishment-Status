@@ -2,9 +2,9 @@
 
 ##Version 0.1
 
-*Added updating feature
+*Added updating feature 1
 
 ##Version 0.1
 
-*Initial implementation
+*Initial implementation 1
 
