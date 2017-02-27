@@ -65,7 +65,7 @@ setInterval(function()
         console.log(cookieAnswer);
         document.cookie = "answerBanChecking"+key+"=; expires=Thu, 01 Jan 1970 00:00:00 UTC;domain=.hypixel.net; path=/;";
 
-        var startAns = cookieAnswer.indexOf("banCheckingAnswer"+key+"=");
+        var startAns = cookieAnswer.indexOf("answerBanChecking"+key+"=");
         var endAns = cookieAnswer.lastIndexOf("END0FANSW3R");
         var info = cookieAnswer.substring(startAns+19+key.toString().length, endAns);
 
