@@ -60,10 +60,10 @@ if(document.getElementsByClassName("titleBar")[0].innerHTML.includes("Report Rul
 setInterval(function()
 {
     var cookieAnswer = document.cookie;
-    if(cookieAnswer.includes("banCheckingAnswer"+key+"="))
+    if(cookieAnswer.includes("answerBanChecking"+key+"="))
     {
         console.log(cookieAnswer);
-        document.cookie = "banCheckingAnswer"+key+"=; expires=Thu, 01 Jan 1970 00:00:00 UTC;domain=.hypixel.net; path=/;";
+        document.cookie = "answerBanChecking"+key+"=; expires=Thu, 01 Jan 1970 00:00:00 UTC;domain=.hypixel.net; path=/;";
 
         var startAns = cookieAnswer.indexOf("banCheckingAnswer"+key+"=");
         var endAns = cookieAnswer.lastIndexOf("END0FANSW3R");
