@@ -1,11 +1,12 @@
 // ==UserScript==
 // @name         Punishment status - Goliath
-// @version      0.4
+// @version      0.4.1
 // @description  Check if a player is currently punished from the server, from forums
 // @author       _Rikardo_
-// @include     https://goliath.hypixel.net/userinfo?*
-// @include     https://goliath.hypixel.net/userinfo#*
-// @include     https://goliath.hypixel.net/userinfo
+// @icon         http://i.imgur.com/9gMGDnD.png
+// @include      https://goliath.hypixel.net/userinfo?*
+// @include      https://goliath.hypixel.net/userinfo#*
+// @include      https://goliath.hypixel.net/userinfo
 // ==/UserScript==
 
 setInterval(function()
@@ -85,7 +86,7 @@ setInterval(function()
     }
 }, 600);
 
-var version = 0.4;
+var version = 0.41;
 var request = new XMLHttpRequest();
 request.onreadystatechange = function() {
     if (request.readyState == XMLHttpRequest.DONE) {
@@ -99,4 +100,3 @@ request.onreadystatechange = function() {
 };
 request.open('GET', 'https://raw.githubusercontent.com/Rikeardo/Punishment-Status/master/GoliathVersion.json', true);
 request.send(null);
-
