@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Punishment status - Goliath
-// @version      0.4.1
+// @version      0.5
 // @description  Check if a player is currently punished from the server, from forums
 // @author       _Rikardo_
 // @icon         http://i.imgur.com/9gMGDnD.png
