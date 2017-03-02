@@ -1,6 +1,6 @@
 #Punishment status Forums
 ##Version 0.4
-* Bug fixed
+* Bug fixes
 
 ##Version 0.4
 * Multi-thread support
