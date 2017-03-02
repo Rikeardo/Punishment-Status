@@ -1,4 +1,8 @@
 #Punishment status Forums
+##Version 0.6
+* Added support for multiple people reported
+* Added icon
+
 ##Version 0.5
 * Bug fixes
 
