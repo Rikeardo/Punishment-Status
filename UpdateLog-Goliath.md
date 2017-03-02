@@ -1,4 +1,6 @@
 #Punishment status Goliath
+##Version 0.4
+* Bug fixes
 
 ##Version 0.3
 * Multi-thread support
