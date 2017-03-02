@@ -1,5 +1,8 @@
 #Punishment status Forums
 ##Version 0.4
+* Bug fixed
+
+##Version 0.4
 * Multi-thread support
 * New keywords
 * Refined keyword searching
