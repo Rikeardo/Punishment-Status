@@ -1,29 +1,43 @@
 // ==UserScript==
 // @name         Punishment status - Forums
-// @version      0.5
+// @version      0.5.1
 // @description  Check if a player is currently punished from the server, from forums
 // @author       _Rikardo_
+// @icon         http://i.imgur.com/9gMGDnD.png
 // @match        https://hypixel.net/threads/*
-// @require     https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js
+// @require      https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js
 // ==/UserScript==
 var key;
+var nameContainer = "";
+var multi_names = [];
+var requesting = false;
+var possible_multi = false;
+var multi_i = 0;
+var checked_multi = false;
+var notFound = false;
+
 if(document.getElementsByClassName("titleBar")[0].innerHTML.includes("Report Rule Breakers")||document.getElementsByClassName("titleBar")[0].innerHTML.includes("Ban Appeal"))
 {
     var content = $('.messageText').html();
     var arr = content.split('\n');
     var number = 1;
-    var nameContainer = "";
+    var nameContainerAdd = "";
+
     while (number <= 3)
     {
         var currentCheck = arr[number];
         currentCheck = currentCheck.toLowerCase();
+        if(currentCheck.includes(" and "))
+        {
+            possible_multi = true;
+        }
         while(currentCheck.includes(" "))
         {
             currentCheck = currentCheck.replace(" ","");
         }
-        if(currentCheck.includes("reason:") === false && currentCheck.includes("reason-") === false && currentCheck.includes("offence:") === false && currentCheck.includes("rank:") === false  && currentCheck.includes("screenshotofbanscreen") === false  && currentCheck.includes("whatisthereason") === false && currentCheck.includes("whywereyoubanned?") === false)
+        if(currentCheck.includes("reason:") === false && currentCheck.includes("reason-") === false && currentCheck.includes("typeofhacks:") === false && currentCheck.includes("offence:") === false && currentCheck.includes("rank:") === false  && currentCheck.includes("screenshotof") === false  && currentCheck.includes("whatisthereason") === false && currentCheck.includes("whywereyoubanned?") === false)
         {
-            getRemoved = ["<b>","</b>","<br>","</br>","<ul>","</ul>","<li>","</li>","ingame","name","rulebreakers","rulebreaker","theruleviolator","ign:","ign-","typeofhacks","in-game","(s)",":","-","*","(",")","."];
+            getRemoved = ["<b>","</b>","<br>","</br>","<ul>","</ul>","<li>","</li>","ign(","ingame","names","name","rulebreakers","rulebreaker","theruleviolator","ign:","ign-","in-game","(s)",":","-","*","(",")","."];
             var current_i = 0;
             while(current_i+1 <= getRemoved.length)
             {
@@ -33,7 +47,7 @@ if(document.getElementsByClassName("titleBar")[0].innerHTML.includes("Report Rul
                 }
                 current_i += 1;
             }
-            nameContainer += currentCheck;
+            nameContainerAdd += currentCheck;
         }
         else
         {
@@ -41,17 +55,35 @@ if(document.getElementsByClassName("titleBar")[0].innerHTML.includes("Report Rul
         }
         number += 1;
     }
+    nameContainer = nameContainerAdd;
     console.log(nameContainer);
-    if(nameContainer.length > 0)
+    if(nameContainer.includes(",")||nameContainer.includes("&")||nameContainer.includes("+"))
     {
-        key = Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000;
-        console.log(key);
-        var now = new Date();
-        var time = now.getTime();
-        time += 10 * 1000;
-        now.setTime(time);
-        document.cookie = "banChecking"+key+"='"+nameContainer+"END0FN4ME"+key+"; expires=" + now.toUTCString() + "; domain=.hypixel.net;path=/";
-
+        console.log("Multiple names");
+        console.log(nameContainer);
+        var namesContainer = nameContainer;
+        nameContainer = "";
+        if(namesContainer.includes(","))
+        {
+            multi_names = namesContainer.split(",");
+        }
+        if(namesContainer.includes("&"))
+        {
+            multi_names = namesContainer.split("&amp;");
+        }
+        if(namesContainer.includes("+"))
+        {
+            multi_names = namesContainer.split("+");
+        }
+        console.log(multi_names);
+    }
+    if(possible_multi && nameContainer.includes("and"))
+    {
+        console.log("Multiple names");
+        console.log(nameContainer);
+        var namesContainer = nameContainer;
+        nameContainer = "";
+        multi_names = namesContainer.split("and");
     }
 
 }
@@ -59,6 +91,32 @@ if(document.getElementsByClassName("titleBar")[0].innerHTML.includes("Report Rul
 
 setInterval(function()
 {
+    if(nameContainer.length > 0 && requesting === false)
+    {
+        console.log("Single name");
+        key = Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000;
+        console.log(key);
+        var now = new Date();
+        var time = now.getTime();
+        time += 10 * 1000;
+        now.setTime(time);
+        requesting = true;
+        document.cookie = "banChecking"+key+"='"+nameContainer+"END0FN4ME"+key+"; expires=" + now.toUTCString() + "; domain=.hypixel.net;path=/";
+        nameContainer = "";
+    }
+    if(multi_i + 1 <= multi_names.length && requesting === false)
+    {
+        key = Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000;
+        console.log(key);
+        var nowMulti = new Date();
+        var timeMulti = nowMulti.getTime();
+        timeMulti += 10 * 1000;
+        nowMulti.setTime(timeMulti);
+        requesting = true;
+        document.cookie = "banChecking"+key+"='"+multi_names[multi_i]+"END0FN4ME"+key+"; expires=" + nowMulti.toUTCString() + "; domain=.hypixel.net;path=/";
+        multi_i += 1;
+    }
+
     var cookieAnswer = document.cookie;
     if(cookieAnswer.includes("answerBanChecking"+key+"="))
     {
@@ -69,9 +127,15 @@ setInterval(function()
         var endAns = cookieAnswer.lastIndexOf("END0FANSW3R");
         var info = cookieAnswer.substring(startAns+19+key.toString().length, endAns);
 
+        requesting = false;
+
         if(info.includes("Does not exist"))
         {
-            $("<div style='height: 40px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: yellow;'>Could not find a proper name or the name is wrong.</div>").insertAfter(".pageNavLinkGroup:first");
+            if(notFound === false)
+            {
+                $("<div style='height: 40px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: yellow;'>Could not find the proper name or the name is wrong.</div>").insertAfter(".pageNavLinkGroup:first");
+                notFound = true;
+            }
         }
         else
         {
@@ -116,7 +180,7 @@ setInterval(function()
     }
 }, 200);
 
-var version = 0.5;
+var version = 0.51;
 var forumUpdateRequest = new XMLHttpRequest();
 forumUpdateRequest.onreadystatechange = function() {
     if (forumUpdateRequest.readyState == XMLHttpRequest.DONE) {
