@@ -1,4 +1,7 @@
 #Punishment status Forums
+##Version 0.6.1
+* Added max count to multiple people
+* Smaller tweaks
 ##Version 0.6
 * Added support for multiple people reported
 * Added icon
@@ -13,7 +16,7 @@
 * Feedback if user does not exist
 * Timeout cookies
 
-###Version 0.31
+###Version 0.3.1
 * Added new keywords
 
 ##Version 0.3
