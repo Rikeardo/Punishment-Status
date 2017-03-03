@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Punishment status - Forums
-// @version      0.6
+// @version      0.6.1
 // @description  Check if a player is currently punished from the server, from forums
 // @author       _Rikardo_
 // @icon         http://i.imgur.com/9gMGDnD.png
@@ -35,9 +35,9 @@ if(document.getElementsByClassName("titleBar")[0].innerHTML.includes("Report Rul
         {
             currentCheck = currentCheck.replace(" ","");
         }
-        if(currentCheck.includes("reason:") === false && currentCheck.includes("reason-") === false && currentCheck.includes("typeofhacks:") === false && currentCheck.includes("offence:") === false && currentCheck.includes("rank:") === false  && currentCheck.includes("screenshotof") === false  && currentCheck.includes("whatisthereason") === false && currentCheck.includes("whywereyoubanned?") === false)
+        if(currentCheck.includes("reason:") === false && currentCheck.includes("reason-") === false && currentCheck.includes("hacks:") === false && currentCheck.includes("time:") === false && currentCheck.includes("typeofhacks:") === false && currentCheck.includes("offence:") === false && currentCheck.includes("rank:") === false  && currentCheck.includes("screenshotof") === false  && currentCheck.includes("whatisthereason") === false && currentCheck.includes("whywereyoubanned?") === false)
         {
-            getRemoved = ["<b>","</b>","<br>","</br>","<ul>","</ul>","<li>","</li>","ign(","ingame","names","name","rulebreakers","rulebreaker","theruleviolator","ign:","ign-","in-game","(s)",":","-","*","(",")","."];
+            getRemoved = ["<b>","</b>","<br>","</br>","<ul>","</ul>","<li>","</li>","ign(","ingame","playername","names","name","rulebreakers","rulebreaker","theruleviolator","ign:","ign-","in-game","(s)",":","-","*","(",")","."];
             var current_i = 0;
             while(current_i+1 <= getRemoved.length)
             {
@@ -104,7 +104,7 @@ setInterval(function()
         document.cookie = "banChecking"+key+"='"+nameContainer+"END0FN4ME"+key+"; expires=" + now.toUTCString() + "; domain=.hypixel.net;path=/";
         nameContainer = "";
     }
-    if(multi_i + 1 <= multi_names.length && requesting === false)
+    if(multi_i + 1 <= multi_names.length && requesting === false && multi_i +1 < 3)
     {
         key = Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000;
         console.log(key);
@@ -180,7 +180,7 @@ setInterval(function()
     }
 }, 200);
 
-var version = 0.6;
+var version = 0.61;
 var forumUpdateRequest = new XMLHttpRequest();
 forumUpdateRequest.onreadystatechange = function() {
     if (forumUpdateRequest.readyState == XMLHttpRequest.DONE) {
