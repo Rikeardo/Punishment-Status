@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Punishment status - Goliath
-// @version      0.4.2
+// @version      0.4.1
 // @description  Check if a player is currently punished from the server, from forums
 // @author       _Rikardo_
 // @icon         http://i.imgur.com/9gMGDnD.png
@@ -85,21 +85,9 @@ setInterval(function()
         document.cookie = "loadedBanChecking"+keyCode+"='"+username+ "END0FL0AD3D"+keyCode+"; expires=" + nowGol.toUTCString() +"; domain=.hypixel.net;path=/";
         window.location.href = "https://goliath.hypixel.net/userinfo?username=" + username;
     }
-    if(cookie.includes("activeUseringoPage="))
-    {
-        alert("You've got multiple active userinfo pages");
-    }
-    else
-    {
-        var nowUser = new Date();
-        var timeUser = nowUser.getTime();
-        timeUser += 550;
-        nowUser.setTime(timeUser);
-        document.cookie = "activeUseringoPage=active; expires=" + nowUser.toUTCString() +"; domain=.hypixel.net;path=/";
-    }
 }, 600);
 
-var version = 0.42;
+var version = 0.41;
 var request = new XMLHttpRequest();
 request.onreadystatechange = function() {
     if (request.readyState == XMLHttpRequest.DONE) {
