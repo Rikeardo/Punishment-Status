@@ -1,4 +1,7 @@
 #Punishment status Forums
+###Version 0.6.2
+* Small tweak for single report
+
 ###Version 0.6.1
 * Added max count to multiple people
 * Smaller tweaks
