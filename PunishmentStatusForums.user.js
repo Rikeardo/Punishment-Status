@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Punishment status - Forums
-// @version      0.6.1
+// @version      0.6.2
 // @description  Check if a player is currently punished from the server, from forums
 // @author       _Rikardo_
 // @icon         http://i.imgur.com/9gMGDnD.png
@@ -23,7 +23,7 @@ if(document.getElementsByClassName("titleBar")[0].innerHTML.includes("Report Rul
     var number = 1;
     var nameContainerAdd = "";
 
-    while (number <= 3)
+    while (number <= 3 && nameContainerAdd.length === 0)
     {
         var currentCheck = arr[number];
         currentCheck = currentCheck.toLowerCase();
@@ -180,7 +180,7 @@ setInterval(function()
     }
 }, 200);
 
-var version = 0.61;
+var version = 0.62;
 var forumUpdateRequest = new XMLHttpRequest();
 forumUpdateRequest.onreadystatechange = function() {
     if (forumUpdateRequest.readyState == XMLHttpRequest.DONE) {
