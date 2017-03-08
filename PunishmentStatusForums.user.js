@@ -37,7 +37,7 @@ if(document.getElementsByClassName("titleBar")[0].innerHTML.includes("Report Rul
         }
         if(currentCheck.includes("reason:") === false && currentCheck.includes("reason-") === false && currentCheck.includes("hacks:") === false && currentCheck.includes("time:") === false && currentCheck.includes("typeofhacks:") === false && currentCheck.includes("offence:") === false && currentCheck.includes("rank:") === false  && currentCheck.includes("screenshotof") === false  && currentCheck.includes("whatisthereason") === false && currentCheck.includes("whywereyoubanned?") === false)
         {
-            getRemoved = ["<b>","</b>","<br>","</br>","<ul>","</ul>","<li>","</li>","user:","igns:","ign(","ingame","playername","names","name","rulebreakers","rulebreaker","theruleviolator","ign:","ign-","in-game","(s)",":","-","*","(",")","."];
+            getRemoved = ["<b>","</b>","<br>","</br>","<ul>","</ul>","<li>","</li>","player:","user:","oldign","igns:","ign(","ingame","playername","names","name","rulebreakers","rulebreaker","theruleviolator","ign:","ign-","in-game","(s)",":","-","*","(",")","."];
             var current_i = 0;
             while(current_i+1 <= getRemoved.length)
             {
