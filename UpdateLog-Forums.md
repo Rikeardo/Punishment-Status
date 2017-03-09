@@ -1,4 +1,7 @@
 #Punishment status Forums
+###Version 0.6.4
+* Common issue patch
+
 ###Version 0.6.3
 * Smaller tweaks
 
