@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Punishment status - Forums
-// @version      0.6.4
+// @version      0.7
 // @description  Check if a player is currently punished from the server, from forums
 // @author       _Rikardo_
 // @icon         http://i.imgur.com/9gMGDnD.png
@@ -37,7 +37,7 @@ if(document.getElementsByClassName("titleBar")[0].innerHTML.includes("Report Rul
         }
         if(currentCheck.includes("reason:") === false && currentCheck.includes("reason-") === false && currentCheck.includes("hacks:") === false && currentCheck.includes("time:") === false && currentCheck.includes("typeofhacks:") === false && currentCheck.includes("offence:") === false && currentCheck.includes("rank:") === false  && currentCheck.includes("screenshotof") === false  && currentCheck.includes("whatisthereason") === false && currentCheck.includes("whywereyoubanned?") === false)
         {
-            getRemoved = ["<b>","</b>","<br>","</br>","<ul>","</ul>","<li>","</li>","hello,","player:","user:","oldign","igns:","ign(","ingame","playername","names","name","rulebreakers","rulebreaker","theruleviolator","ign:","ign-","in-game","(s)",":","-","*","(",")","."];
+            getRemoved = ["<b>","</b>","<br>","</br>","<ul>","</ul>","<li>","</li>","hello,","player:","mcname:","user:","oldign","ignofhacker","igns:","ign(","ingame","playername","names","name","rulebreakers","rulebreaker","theruleviolator","ign:","ign-","in-game","(s)",":","-","*","(",")","."];
             var current_i = 0;
             while(current_i+1 <= getRemoved.length)
             {
@@ -145,12 +145,22 @@ setInterval(function()
             var usernameInfo = info.substring(0, endName);
             if(info.includes("Banned:")||info.includes("Muted:"))
             {
+                var banType = "";
                 if(info.includes("Banned:")&& info.includes("Muted:") === false)
                 {
                     var startBan = info.indexOf("Banned:");
                     var endBan = info.lastIndexOf(",");
                     var banReasonInfo = info.substring(startBan+7, endBan);
-                    $("<div style='height: 40px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: lightcoral;'>"+usernameInfo+" is currently banned for \""+banReasonInfo+"\".</div>").insertAfter(".pageNavLinkGroup:first");
+
+                    if(info.includes("Type:"))
+                    {
+                        var startType = info.indexOf("Type:");
+                        var endType = info.lastIndexOf("$");
+                        banType = info.substring(startType+5,endType) + " ";
+                    }
+
+                    console.log(banType);
+                    $("<div style='height: 40px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: lightcoral;'>"+usernameInfo+" is currently "+banType+"banned for \""+banReasonInfo+"\".</div>").insertAfter(".pageNavLinkGroup:first");
                 }
                 if(info.includes("Banned:") === false && info.includes("Muted:"))
                 {
@@ -168,7 +178,15 @@ setInterval(function()
                     var endBan2 = info.lastIndexOf(",");
                     var banReasonInfo2 = info.substring(startBan2+7, endBan2);
                     console.log(banReasonInfo2);
-                    $("<div style='height: 40px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: lightcoral;'>"+usernameInfo+" is currently banned for \""+banReasonInfo2+"\" and muted for \""+muteReasonInfo2+"\".</div>").insertAfter(".pageNavLinkGroup:first");
+
+                    if(info.includes("Type:"))
+                    {
+                        var startBothType = info.indexOf("Type:");
+                        var endBothType = info.lastIndexOf("$");
+                        banType = info.substring(startBothType+5,endBothType) + " ";
+                    }
+
+                    $("<div style='height: 40px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: lightcoral;'>"+usernameInfo+" is currently "+banType+"banned for \""+banReasonInfo2+"\" and muted for \""+muteReasonInfo2+"\".</div>").insertAfter(".pageNavLinkGroup:first");
                 }
             }
             else
@@ -181,7 +199,7 @@ setInterval(function()
 
 }, 200);
 
-var version = 0.64;
+var version = 0.7;
 var forumUpdateRequest = new XMLHttpRequest();
 forumUpdateRequest.onreadystatechange = function() {
     if (forumUpdateRequest.readyState == XMLHttpRequest.DONE) {
