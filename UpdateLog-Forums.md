@@ -1,4 +1,8 @@
 #Punishment status Forums
+##Version 0.7
+* Added ban 'type'
+* Small tweaks
+
 ###Version 0.6.4
 * Common issue patch
 
