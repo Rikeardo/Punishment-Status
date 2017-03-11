@@ -1,4 +1,7 @@
 #Punishment status Goliath
+##Version 0.5
+* Added support for ban 'type'
+
 ###Version 0.4.1
 * Added logo
 
