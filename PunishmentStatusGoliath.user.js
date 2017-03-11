@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Punishment status - Goliath
-// @version      0.4.1
+// @version      0.5
 // @description  Check if a player is currently punished from the server, from forums
 // @author       _Rikardo_
 // @icon         http://i.imgur.com/9gMGDnD.png
@@ -24,6 +24,7 @@ setInterval(function()
             document.cookie = "loadedBanChecking"+forumKeyLoaded+"=; expires=Thu, 01 Jan 1970 00:00:00 UTC;domain=.hypixel.net; path=/;";
             var muteReason = "";
             var banReason = "";
+            var banType = "";
             var bans = document.getElementsByClassName("uk-width-1-4")[1].innerHTML;
             var mutes = document.getElementsByClassName("uk-width-1-4")[3].innerHTML;
             if(bans.includes("Current Ban"))
@@ -31,8 +32,25 @@ setInterval(function()
                 var startBanCut = bans.indexOf("<br>");
                 var endBanCut = bans.indexOf("By:");
                 var cutBan = bans.substring(startBanCut+5, endBanCut);
+                console.log(cutBan);
 
                 var endBanReason = cutBan.indexOf("<br>");
+
+                var startTypeBan = cutBan.indexOf("Type:");
+                var endTypeBan = cutBan.lastIndexOf("<br>");
+                var banTypeG = cutBan.substring(startTypeBan+6,endTypeBan).toLowerCase();
+                console.log(banTypeG);
+
+                if(banTypeG === "permanent")
+                {
+                    banType = "Type:permanently$";
+                }
+                else if(banTypeG === "temporary")
+                {
+                    banType = "Type:temporarily$";
+                }
+
+                console.log(banType);
                 banReason = "Banned:" + cutBan.substring(8, endBanReason)+",";
 
                 console.log(banReason);
@@ -52,7 +70,7 @@ setInterval(function()
             var timeG = nowG.getTime();
             timeG += 10 * 1000;
             nowG.setTime(timeG);
-            document.cookie = "answerBanChecking"+forumKeyLoaded+"='"+/([A-Za-z0-9_]{1,16})$/.exec($("#columnx > font:first-of-type").text())[1]+ "'"+banReason+muteReason+"END0FANSW3R; expires=" + nowG.toUTCString() +"; domain=.hypixel.net;path=/";
+            document.cookie = "answerBanChecking"+forumKeyLoaded+"='"+/([A-Za-z0-9_]{1,16})$/.exec($("#columnx > font:first-of-type").text())[1]+ "'"+banReason+muteReason+banType+"END0FANSW3R; expires=" + nowG.toUTCString() +"; domain=.hypixel.net;path=/";
         }
         else
         {
@@ -87,7 +105,7 @@ setInterval(function()
     }
 }, 600);
 
-var version = 0.41;
+var version = 0.5;
 var request = new XMLHttpRequest();
 request.onreadystatechange = function() {
     if (request.readyState == XMLHttpRequest.DONE) {
