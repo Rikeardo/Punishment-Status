@@ -1,4 +1,10 @@
 #Punishment status Forums
+##Version 0.8
+* Added date and person who took action on Appeals.
+* Added notification if Goliath does not respond.
+* Changed 'punished' color due to font color in Appeals.
+* Smaller tweaks
+
 ##Version 0.7
 * Added ban 'type'
 * Small tweaks
