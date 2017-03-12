@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Punishment status - Forums
-// @version      0.8
+// @version      0.8.1
 // @description  Check if a player is currently punished from the server, from forums
 // @author       _Rikardo_
 // @icon         http://i.imgur.com/9gMGDnD.png
@@ -87,7 +87,13 @@ if(document.getElementsByClassName("titleBar")[0].innerHTML.includes("Report Rul
         nameContainer = "";
         multi_names = namesContainer.split("and");
     }
-
+setTimeout(function()
+{
+    if(response === false)
+    {
+        $("<div style='height: 40px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: black; color:white;'>You dont seem to get an answer from Goliath. Forgot to open the userinfo page?</div>").insertAfter(".pageNavLinkGroup:first");
+    }
+}, 15000);
 }
 
 
@@ -241,15 +247,7 @@ setInterval(function()
 
 }, 200);
 
-setTimeout(function()
-{
-    if(response === false)
-    {
-        $("<div style='height: 40px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: black; color:white;'>You dont seem to get an answer from Goliath. Forgot to open the userinfo page?</div>").insertAfter(".pageNavLinkGroup:first");
-    }
-}, 15000);
-
-var version = 0.8;
+var version = 0.81;
 var forumUpdateRequest = new XMLHttpRequest();
 forumUpdateRequest.onreadystatechange = function() {
     if (forumUpdateRequest.readyState == XMLHttpRequest.DONE) {
