@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Punishment status - Forums
-// @version      0.7
+// @version      0.8
 // @description  Check if a player is currently punished from the server, from forums
 // @author       _Rikardo_
 // @icon         http://i.imgur.com/9gMGDnD.png
@@ -15,6 +15,7 @@ var possible_multi = false;
 var multi_i = 0;
 var checked_multi = false;
 var notFound = false;
+var response = false;
 
 if(document.getElementsByClassName("titleBar")[0].innerHTML.includes("Report Rule Breakers")||document.getElementsByClassName("titleBar")[0].innerHTML.includes("Ban Appeal"))
 {
@@ -23,13 +24,14 @@ if(document.getElementsByClassName("titleBar")[0].innerHTML.includes("Report Rul
     var number = 1;
     var nameContainerAdd = "";
 
-    while (number <= 3 && nameContainerAdd.length === 0)
+    while (number <= 5 && nameContainerAdd.length === 0)
     {
         var currentCheck = arr[number];
         currentCheck = currentCheck.toLowerCase();
         if(currentCheck.includes(" and "))
         {
             possible_multi = true;
+            console.log("and multi");
         }
         while(currentCheck.includes(" "))
         {
@@ -37,7 +39,7 @@ if(document.getElementsByClassName("titleBar")[0].innerHTML.includes("Report Rul
         }
         if(currentCheck.includes("reason:") === false && currentCheck.includes("reason-") === false && currentCheck.includes("hacks:") === false && currentCheck.includes("time:") === false && currentCheck.includes("typeofhacks:") === false && currentCheck.includes("offence:") === false && currentCheck.includes("rank:") === false  && currentCheck.includes("screenshotof") === false  && currentCheck.includes("whatisthereason") === false && currentCheck.includes("whywereyoubanned?") === false)
         {
-            getRemoved = ["<b>","</b>","<br>","</br>","<ul>","</ul>","<li>","</li>","hello,","player:","mcname:","user:","oldign","ignofhacker","igns:","ign(","ingame","playername","names","name","rulebreakers","rulebreaker","theruleviolator","ign:","ign-","in-game","(s)",":","-","*","(",")","."];
+            getRemoved = ["<b>","</b>","<br>","</br>","<ul>","</ul>","<li>","</li>","hello,","player:","offender:","mcname:","user:","username:","oldign","ignofhacker","ignofthehacker","igns:","ign(","ingame","hacker-","playername","names","name","rulebreakers","rulebreaker","theruleviolator","ign:","ign-","in-game","(s)",":","-","*","(",")","."];
             var current_i = 0;
             while(current_i+1 <= getRemoved.length)
             {
@@ -120,6 +122,7 @@ setInterval(function()
     var cookieAnswer = document.cookie;
     if(cookieAnswer.includes("answerBanChecking"+key+"="))
     {
+        response = true;
         console.log(cookieAnswer);
         document.cookie = "answerBanChecking"+key+"=; expires=Thu, 01 Jan 1970 00:00:00 UTC;domain=.hypixel.net; path=/;";
 
@@ -158,16 +161,55 @@ setInterval(function()
                         var endType = info.lastIndexOf("$");
                         banType = info.substring(startType+5,endType) + " ";
                     }
+                    var BDateB = "";
+                    var BByB = "";
+                    if(info.includes("BDate:")&&info.includes("BBy:"))
+                    {
+                        var startBDateB = info.indexOf("BDate:");
+                        var endBDateB = info.indexOf("@B");
+                        BDateB = info.substring(startBDateB+1,endBDateB);
 
-                    console.log(banType);
-                    $("<div style='height: 40px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: lightcoral;'>"+usernameInfo+" is currently "+banType+"banned for \""+banReasonInfo+"\".</div>").insertAfter(".pageNavLinkGroup:first");
+                        var startBByB = info.indexOf("BBy:");
+                        var endBByB = info.indexOf("£B");
+                        BByB = info.substring(startBByB+1,endBByB);
+                    }
+                    console.log(BDateB);
+                    console.log(BByB);
+                    var extraB = "";
+                    if(document.getElementsByClassName("titleBar")[0].innerHTML.includes("Ban Appeal"))
+                    {
+                        extraB = "<div style='display: block; margin:0;padding:0;'>"+BDateB+" "+BByB+"</div>";
+                    }
+
+                    $("<div style='height: 40px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: #ffb3b3;'>"+usernameInfo+" is currently "+banType+"banned for \""+banReasonInfo+"\"."+extraB+"</div>").insertAfter(".pageNavLinkGroup:first");
                 }
                 if(info.includes("Banned:") === false && info.includes("Muted:"))
                 {
                     var startMute = info.indexOf("Muted:");
                     var endMute = info.lastIndexOf("&");
                     var muteReasonInfo = info.substring(startMute+6, endMute);
-                    $("<div style='height: 40px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: lightcoral;'>"+usernameInfo+" is currently muted for \""+muteReasonInfo+"\".</div>").insertAfter(".pageNavLinkGroup:first");
+
+                    var MDateM = "";
+                    var MByM = "";
+                    if(info.includes("MDate:")&&info.includes("MBy:"))
+                    {
+                        var startMDateM = info.indexOf("MDate:");
+                        var endMDateM = info.indexOf("@M");
+                        MDateM = info.substring(startMDateM+1,endMDateM);
+
+                        var startMByM = info.indexOf("MBy:");
+                        var endMByM = info.indexOf("£M");
+                        MByM = info.substring(startMByM+1,endMByM);
+                    }
+                    console.log(MDateM);
+                    console.log(MByM);
+                    var extraM = "";
+                    if(document.getElementsByClassName("titleBar")[0].innerHTML.includes("Ban Appeal"))
+                    {
+                        extraM = "<div style='display: block; margin:0;padding:0;'>"+MDateM+" "+MByM+"</div>";
+                    }
+
+                    $("<div style='height: 40px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: #ffb3b3;'>"+usernameInfo+" is currently muted for \""+muteReasonInfo+"\"."+extraM+"</div>").insertAfter(".pageNavLinkGroup:first");
                 }
                 if(info.includes("Banned:") && info.includes("Muted:"))
                 {
@@ -186,7 +228,7 @@ setInterval(function()
                         banType = info.substring(startBothType+5,endBothType) + " ";
                     }
 
-                    $("<div style='height: 40px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: lightcoral;'>"+usernameInfo+" is currently "+banType+"banned for \""+banReasonInfo2+"\" and muted for \""+muteReasonInfo2+"\".</div>").insertAfter(".pageNavLinkGroup:first");
+                    $("<div style='height: 40px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: #ffb3b3;'>"+usernameInfo+" is currently "+banType+"banned for \""+banReasonInfo2+"\" and muted for \""+muteReasonInfo2+"\".</div>").insertAfter(".pageNavLinkGroup:first");
                 }
             }
             else
@@ -199,7 +241,15 @@ setInterval(function()
 
 }, 200);
 
-var version = 0.7;
+setTimeout(function()
+{
+    if(response === false)
+    {
+        $("<div style='height: 40px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: black; color:white;'>You dont seem to get an answer from Goliath. Forgot to open the userinfo page?</div>").insertAfter(".pageNavLinkGroup:first");
+    }
+}, 15000);
+
+var version = 0.8;
 var forumUpdateRequest = new XMLHttpRequest();
 forumUpdateRequest.onreadystatechange = function() {
     if (forumUpdateRequest.readyState == XMLHttpRequest.DONE) {
