@@ -1,4 +1,7 @@
 #Punishment status Goliath
+##Version 0.6
+* Added support for date and person who took action.
+
 ##Version 0.5
 * Added support for ban 'type'
 
