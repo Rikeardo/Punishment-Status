@@ -4,6 +4,7 @@
 * UUID request instead of Name
 * Added new name if changed
 * New search method to find names more 'weird' formats
+* Added network level and duration in Appeals
 
 ##Version 0.8
 * Added date and person who took action on Appeals.
