@@ -1,4 +1,10 @@
 #Punishment status Forums
+##Version 0.9
+* Username check towards Mojang
+* UUID request instead of Name
+* Added new name if changed
+* New search method to find names more 'weird' formats
+
 ##Version 0.8
 * Added date and person who took action on Appeals.
 * Added notification if Goliath does not respond.
