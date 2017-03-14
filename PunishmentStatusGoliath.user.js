@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Punishment status - Goliath
-// @version      0.6
+// @version      0.7
 // @description  Check if a player is currently punished from the server, from forums
 // @author       _Rikardo_
 // @icon         http://i.imgur.com/9gMGDnD.png
@@ -29,6 +29,9 @@ setInterval(function()
             var byMutes = "";
             var dateBan = "";
             var dateMute = "";
+            var lengthB = "";
+            var lengthM = "";
+            var networkLevel = "";
             var bans = document.getElementsByClassName("uk-width-1-4")[1].innerHTML;
             var mutes = document.getElementsByClassName("uk-width-1-4")[3].innerHTML;
 
@@ -62,6 +65,10 @@ setInterval(function()
                     var startByBans2 = bans.indexOf("By:");
                     var endByBans2 = bans.indexOf("<br>\nExpires:");
                     byBans = "B"+bans.substring(startByBans2,endByBans2)+"£B ";
+
+                    var uncutLengthB = bans.substring(bans.indexOf("TempBan"),bans.indexOf("Date:"));
+                    lengthB = "Duration:"+uncutLengthB.substring(uncutLengthB.indexOf(" for ")+5,uncutLengthB.indexOf("<br>"))+"€B";
+                    console.log(lengthB);
                 }
                 console.log(byBans);
                 console.log(banType);
@@ -88,14 +95,22 @@ setInterval(function()
                 var endByMutes = mutes.indexOf("<br>\nExpires:");
                 byMutes = "M"+mutes.substring(startByMutes,endByMutes)+"£M ";
                 console.log(byMutes);
+                var uncutLengthM = mutes.substring(mutes.indexOf("Mute by"),mutes.indexOf("Reason:")[1]);
+                lengthM = "Duration:"+uncutLengthM.substring(uncutLengthM.indexOf(" for ")+5,uncutLengthM.indexOf("<br>"))+"€M";
+                console.log(lengthM);
 
-
+            }
+            if(mutes.includes("Current Mute")||bans.includes("Current Ban"))
+            {
+                var userInfo = document.getElementsByClassName("uk-width-1-4")[0].innerHTML;
+                networkLevel = "NetworkLevel:"+userInfo.substring(userInfo.indexOf("Network Level")+15,userInfo.indexOf("First Login")-9)+"¤";
+                console.log(networkLevel);
             }
             var nowG = new Date();
             var timeG = nowG.getTime();
             timeG += 10 * 1000;
             nowG.setTime(timeG);
-            document.cookie = "answerBanChecking"+forumKeyLoaded+"='"+/([A-Za-z0-9_]{1,16})$/.exec($("#columnx > font:first-of-type").text())[1]+ "'"+banReason+dateBan+byBans+banType+muteReason+dateMute+byMutes+"END0FANSW3R; expires=" + nowG.toUTCString() +"; domain=.hypixel.net;path=/";
+            document.cookie = "answerBanChecking"+forumKeyLoaded+"='"+/([A-Za-z0-9_]{1,16})$/.exec($("#columnx > font:first-of-type").text())[1]+ "'"+banReason+dateBan+byBans+banType+lengthB+muteReason+dateMute+byMutes+lengthM+networkLevel+"END0FANSW3R; expires=" + nowG.toUTCString() +"; domain=.hypixel.net;path=/";
         }
         else
         {
@@ -126,11 +141,11 @@ setInterval(function()
         timeGol += 10 * 1000;
         nowGol.setTime(timeGol);
         document.cookie = "loadedBanChecking"+keyCode+"='"+username+ "END0FL0AD3D"+keyCode+"; expires=" + nowGol.toUTCString() +"; domain=.hypixel.net;path=/";
-        window.location.href = "https://goliath.hypixel.net/userinfo?username=" + username;
+        window.location.href = "https://goliath.hypixel.net/userinfo?uuid=" + username;
     }
 }, 600);
 
-var version = 0.6;
+var version = 0.7;
 var request = new XMLHttpRequest();
 request.onreadystatechange = function() {
     if (request.readyState == XMLHttpRequest.DONE) {
