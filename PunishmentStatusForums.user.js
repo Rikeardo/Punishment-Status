@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Punishment status - Forums
-// @version      0.9
+// @version      0.9.1
 // @description  Check if a player is currently punished from the server, from forums
 // @author       _Rikardo_
 // @icon         http://i.imgur.com/9gMGDnD.png
@@ -39,7 +39,7 @@ if(document.getElementsByClassName("titleBar")[0].innerHTML.includes("Report Rul
         {
             currentFastCheck = currentFastCheck.replace(" ","");
         }
-        fastCheckSearches = ["newign","newname","player:","players:","offender:","mcname:","user:","username:","in-gamenamesof","in-gamenamesof","ignofhacker","ignofthehacker","igns:","ign(","ingamename","hacker-","playername","names:","name:","names-","name-","rulebreakers","rulebreaker","theruleviolator","ign:","ign-","in-game"];
+        fastCheckSearches = ["newign","newname","mcname:","user:","username:","in-gamenameofplayer","in-gamenamesof","in-gamenamesof","ignofhacker","ignofthehacker","hackerign:","igns:","ign(","ingamename","hacker-","player:","players:","offender:","offenders:","playername","names:","name:","names-","name-","rulebreakers","rulebreaker","theruleviolator","ign:","ign-","in-game"];
         while(fastcheckInner_i+1 <= fastCheckSearches.length && stopFastcheck === false)
         {
             if(currentFastCheck.includes(fastCheckSearches[fastcheckInner_i])&&currentFastCheck.includes("oldign")===false&&currentFastCheck.includes("oldname")===false)
@@ -67,7 +67,7 @@ if(document.getElementsByClassName("titleBar")[0].innerHTML.includes("Report Rul
         }
         if(currentCheck.includes("reason:") === false && currentCheck.includes("reason-") === false && currentCheck.includes("hacks:") === false && currentCheck.includes("time:") === false && currentCheck.includes("typeofhacks:") === false && currentCheck.includes("offence:") === false && currentCheck.includes("rank:") === false  && currentCheck.includes("screenshotof") === false  && currentCheck.includes("whatisthereason") === false && currentCheck.includes("whywereyoubanned?") === false)
         {
-            getRemoved = ["<b>","</b>","<br>","</br>","<ul>","</ul>","<li>","</li>","<i>","</i>","hello,","player:","players:","offender:","mcname:","user:","username:","oldign","newign","oldname","newname","in-gamenamesof","in-gamenamesof","ignofhacker","ignofthehacker","igns:","ign(","ingamename","ingame","hacker-","playername","names:","name:","names-","name-","rulebreakers","rulebreaker","theruleviolator","ign:","ign-","in-game","[vip]","[vip+]","[mvp]","[mvp+]","(s)",":","-","*","(",")","."];
+            getRemoved = ["<b>","</b>","<br>","</br>","<ul>","</ul>","<li>","</li>","<i>","</i>","hello,","in-gamenameofplayer","username:","oldign","newign","oldname","newname","in-gamenamesof","in-gamenamesof","hackerign:","ignofhacker","ignofthehacker","igns:","ign(","ingamename","ingame","hacker-","player:","players:","offender:","offenders:","mcname:","user:","playername","names:","name:","names-","name-","rulebreakers","rulebreaker","theruleviolator","ign:","ign-","in-game","[vip]","[vip+]","[mvp]","[mvp+]","name(s)","(s)name","(s)",":","-","*","(",")","."];
             var current_i = 0;
             while(current_i+1 <= getRemoved.length)
             {
@@ -77,7 +77,10 @@ if(document.getElementsByClassName("titleBar")[0].innerHTML.includes("Report Rul
                 }
                 current_i += 1;
             }
-            nameContainerAdd += currentCheck;
+            if(currentCheck !== "name")
+            {
+                nameContainerAdd += currentCheck;
+            }
         }
         else
         {
@@ -354,7 +357,7 @@ setInterval(function()
 
 
 
-var version = 0.9;
+var version = 0.91;
 var forumUpdateRequest = new XMLHttpRequest();
 forumUpdateRequest.onreadystatechange = function() {
     if (forumUpdateRequest.readyState == XMLHttpRequest.DONE) {
