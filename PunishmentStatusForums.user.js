@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Punishment status - Forums
-// @version      0.9.1
+// @version      0.9.2
 // @description  Check if a player is currently punished from the server, from forums
 // @author       _Rikardo_
 // @icon         http://i.imgur.com/9gMGDnD.png
@@ -322,13 +322,27 @@ setInterval(function()
                     }
                     console.log(MDateM);
                     console.log(MByM);
-                    var extraM = "";
+                    var innerM = "";
                     if(document.getElementsByClassName("titleBar")[0].innerHTML.includes("Ban Appeal"))
                     {
-                        extraM = "<div style='display: block; margin:0;padding:0;'>"+MDateM+" "+MByM+"</div>";
+                        var muteDuration = "";
+                        var networkLevelM = "";
+                        if(info.includes("€M"))
+                        {
+                            muteDuration = info.substring(info.indexOf("Duration:")+9,info.indexOf("€M"))+" - ";
+                        }
+                        if(info.includes("NetworkLevel:"))
+                        {
+                            networkLevelM = " (Level: "+info.substring(info.indexOf("NetworkLevel:")+13,info.indexOf("¤"))+")";
+                        }
+                        innerM = usernamePrint+networkLevelM+" is "+banType+"muted for "+muteDuration+"\""+muteReasonInfo+"\"."+"<div style='display: block; margin:0;padding:0;'>"+MDateM+" "+MByM+"</div>";
+                    }
+                    else
+                    {
+                        innerM= usernamePrint+" is "+banType+"banned for \""+muteReasonInfo+"\".";
                     }
 
-                    $("<div style='height: 40px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: #ffb3b3;'>"+usernamePrint+" is muted for \""+muteReasonInfo+"\"."+extraM+"</div>").insertAfter(".pageNavLinkGroup:first");
+                    $("<div style='height: 40px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: #ffb3b3;'>"+innerM+"</div>").insertAfter(".pageNavLinkGroup:first");
                 }
                 if(info.includes("Banned:") && info.includes("Muted:"))
                 {
@@ -357,7 +371,7 @@ setInterval(function()
 
 
 
-var version = 0.91;
+var version = 0.92;
 var forumUpdateRequest = new XMLHttpRequest();
 forumUpdateRequest.onreadystatechange = function() {
     if (forumUpdateRequest.readyState == XMLHttpRequest.DONE) {
