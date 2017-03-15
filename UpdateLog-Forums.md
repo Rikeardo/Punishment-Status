@@ -1,4 +1,7 @@
 #Punishment status Forums
+##Version 0.9.1
+* Fixed bug caused by earlier tweak
+
 ##Version 0.9
 * Username check towards Mojang
 * UUID request instead of Name
