@@ -1,4 +1,7 @@
 #Punishment status Forums
+##Version 0.9.2
+* Fixed mute message in Appeals.
+
 ##Version 0.9.1
 * Fixed bug caused by earlier tweak
 
