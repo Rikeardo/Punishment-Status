@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Punishment status - Goliath ARCHEIEVED
+// @name         Punishment status - Goliath
 // @version      0.7.1
 // @description  Check if a player is currently punished from the server, from forums
 // @author       _Rikardo_
