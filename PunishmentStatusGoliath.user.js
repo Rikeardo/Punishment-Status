@@ -1,4 +1,8 @@
 // ==UserScript==
+// @name         Punishment status - Goliath ARCHIEVED PART
+// @version      0.7
+// @description  Check if a player is currently punished from the server, from forums
+// @author       _Rikardo_
 // ==/UserScript==
 
 var version = 0.7;
