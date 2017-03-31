@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Punishment status
+// @name         Punishment status - Forums
 // @version      1.0
 // @description  Check if a player is currently punished on the server from forums
 // @author       _Rikardo_
