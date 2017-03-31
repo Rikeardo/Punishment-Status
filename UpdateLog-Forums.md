@@ -1,4 +1,8 @@
 #Punishment status Forums
+##Version 1.0
+* Made both tweaks into one
+* Added buttons for Appeals for different tags
+
 ##Version 0.9.2
 * Fixed mute message in Appeals.
 
