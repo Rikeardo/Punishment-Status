@@ -1,7 +1,11 @@
 #Punishment status Goliath
+###Version 0.7.1
+* Removed this part and included it in other
+
 ##Version 0.7
 * Changed from name to UUID
 * Support for network level and duration
+
 ##Version 0.6
 * Added support for date and person who took action.
 
