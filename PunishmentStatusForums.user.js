@@ -550,7 +550,7 @@ else if(url.includes("https://hypixel.net/threads/"))
     }, 200);
 
 }
-if(url == "https://hypixel.net/search")
+if(url.includes("https://hypixel.net/search"))
 {
     setInterval(function()
                 {
