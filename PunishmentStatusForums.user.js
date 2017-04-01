@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Punishment status - Forums
-// @version      1.0.2
+// @version      1.0.3
 // @description  Check if a player is currently punished on the server from forums
 // @author       _Rikardo_
 // @icon         http://i.imgur.com/9gMGDnD.png
@@ -168,7 +168,6 @@ else if(url.includes("https://hypixel.net/threads/"))
     var nameContainer = "";
     var multi_names = [];
     var requesting = false;
-    var possible_multi = false;
     var multi_i = 1;
     var checked_multi = false;
     var notFound = false;
@@ -213,8 +212,7 @@ else if(url.includes("https://hypixel.net/threads/"))
             currentCheck = currentCheck.toLowerCase();
             if(currentCheck.includes(" and "))
             {
-                possible_multi = true;
-                console.log("and multi");
+                currentCheck = currentCheck.replace(" and ",",");
             }
             while(currentCheck.includes(" "))
             {
@@ -264,6 +262,7 @@ else if(url.includes("https://hypixel.net/threads/"))
             console.log(nameContainer);
             var namesContainer = nameContainer;
             nameContainer = "";
+            console.log(nameContainer);
             if(namesContainer.includes(","))
             {
                 multi_names = namesContainer.split(",");
@@ -277,14 +276,6 @@ else if(url.includes("https://hypixel.net/threads/"))
                 multi_names = namesContainer.split("+");
             }
             console.log(multi_names);
-        }
-        if(possible_multi && nameContainer.includes("and"))
-        {
-            console.log("Multiple names");
-            console.log(nameContainer);
-            var namesContainer = nameContainer;
-            nameContainer = "";
-            multi_names = namesContainer.split("and");
         }
         setTimeout(function()
                    {
@@ -572,7 +563,7 @@ function openSearch()
 }
 
 
-var version = 1.02;
+var version = 1.03;
 var forumUpdateRequest = new XMLHttpRequest();
 forumUpdateRequest.onreadystatechange = function() {
     if (forumUpdateRequest.readyState == XMLHttpRequest.DONE) {
