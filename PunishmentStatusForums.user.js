@@ -552,17 +552,20 @@ else if(url.includes("https://hypixel.net/threads/"))
 }
 if(url == "https://hypixel.net/search")
 {
-    var cookieSearch = document.cookie;
-    if(cookieSearch.includes("forumSearch="))
-       {
-           var nameSearch = cookieSearch.substring(cookieSearch.indexOf("forumSearch=")+12,cookieSearch.indexOf("€^$"));
-           document.cookie = "forumSearch=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-           document.getElementById("ctrl_keywords").value = nameSearch;
-           var element = document.getElementById('ctrl_nodes');
-           element.value = "37";
-           form = document.getElementsByClassName("xenForm");
-           form[0].submit();
-       }
+    setInterval(function()
+                {
+        var cookieSearch = document.cookie;
+        if(cookieSearch.includes("forumSearch="))
+        {
+            var nameSearch = cookieSearch.substring(cookieSearch.indexOf("forumSearch=")+12,cookieSearch.indexOf("€^$"));
+            document.cookie = "forumSearch=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.getElementById("ctrl_keywords").value = nameSearch;
+            var element = document.getElementById('ctrl_nodes');
+            element.value = "37";
+            form = document.getElementsByClassName("xenForm");
+            form[0].submit();
+        }
+    }, 500);
 }
 
 // FUNCTIONS
