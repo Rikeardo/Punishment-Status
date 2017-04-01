@@ -16,6 +16,21 @@
 var url = window.location.href;
 var usernamePrint = "";
 
+var version = 1.03;
+var forumUpdateRequest = new XMLHttpRequest();
+forumUpdateRequest.onreadystatechange = function() {
+    if (forumUpdateRequest.readyState == XMLHttpRequest.DONE) {
+        var updatedScriptVersion = forumUpdateRequest.responseText;
+        if(version < updatedScriptVersion)
+        {
+            console.log("Update script");
+            window.location.href = "https://github.com/Rikeardo/Punishment-Status/raw/master/PunishmentStatusForums.user.js";
+        }
+    }
+};
+forumUpdateRequest.open('GET', 'https://raw.githubusercontent.com/Rikeardo/Punishment-Status/master/ForumVersion.json', true);
+forumUpdateRequest.send(null);
+
 if(url.includes("https://goliath.hypixel.net/userinfo"))
 {
     setInterval(function()
@@ -220,7 +235,7 @@ else if(url.includes("https://hypixel.net/threads/"))
             }
             if(currentCheck.includes("reason:") === false && currentCheck.includes("reason-") === false && currentCheck.includes("hacks:") === false && currentCheck.includes("time:") === false && currentCheck.includes("typeofhacks:") === false && currentCheck.includes("offence:") === false && currentCheck.includes("rank:") === false  && currentCheck.includes("screenshotof") === false  && currentCheck.includes("whatisthereason") === false && currentCheck.includes("whywereyoubanned?") === false)
             {
-                getRemoved = ["<b>","</b>","<br>","</br>","<ul>","</ul>","<li>","</li>","<i>","</i>","'","hello,","violators","violator:","in-gamenameofplayer","username:","oldign","newign","oldname","newname","in-gamenamesof","in-gamenamesof","nameof","hackerign:","ignofhacker","ignofthehacker","igns:","ign(","ingamename","ingame","hacker-","player:","players:","offender:","offenders:","mcname:","user:","playername","names:","name:","names-","name-","rulebreakers","rulebreaker","theruleviolator","ign:","ign-","ign*","in-game","[vip]","[vip+]","[mvp]","[mvp+]","name(s)","(s)name","(s)",":","-","*","(",")","."];
+                getRemoved = ["<b>","</b>","<br>","</br>","<ul>","</ul>","<li>","</li>","<i>","</i>","'","hello,","violators","violator:","hackersin-game","in-gamenameofplayer","username:","oldign","newign","oldname","newname","in-gamenamesof","in-gamenamesof","nameof","hackerign:","ignofhacker","ignofthehacker","igns:","ign(","ingamename","ingame","hacker-","player:","players:","offender:","offenders:","mcname:","user:","playername","names:","name:","names-","name-","rulebreakers","rulebreaker","theruleviolator","ign:","ign-","ign*","in-game","[vip]","[vip+]","[mvp]","[mvp+]","name(s)","(s)name","(s)",":","-","*","(",")","."];
                 var current_i = 0;
                 while(current_i+1 <= getRemoved.length)
                 {
@@ -562,18 +577,3 @@ function openSearch()
     window.open("https://hypixel.net/search");
 }
 
-
-var version = 1.03;
-var forumUpdateRequest = new XMLHttpRequest();
-forumUpdateRequest.onreadystatechange = function() {
-    if (forumUpdateRequest.readyState == XMLHttpRequest.DONE) {
-        var updatedScriptVersion = forumUpdateRequest.responseText;
-        if(version < updatedScriptVersion)
-        {
-            console.log("Update script");
-            window.location.href = "https://github.com/Rikeardo/Punishment-Status/raw/master/PunishmentStatusForums.user.js";
-        }
-    }
-};
-forumUpdateRequest.open('GET', 'https://raw.githubusercontent.com/Rikeardo/Punishment-Status/master/ForumVersion.json', true);
-forumUpdateRequest.send(null);
