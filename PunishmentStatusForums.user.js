@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Punishment status - Forums
-// @version      1.0.3
+// @version      1.0.4
 // @description  Check if a player is currently punished on the server from forums
 // @author       _Rikardo_
 // @icon         http://i.imgur.com/9gMGDnD.png
@@ -16,7 +16,7 @@
 var url = window.location.href;
 var usernamePrint = "";
 
-var version = 1.03;
+var version = 1.04;
 var forumUpdateRequest = new XMLHttpRequest();
 forumUpdateRequest.onreadystatechange = function() {
     if (forumUpdateRequest.readyState == XMLHttpRequest.DONE) {
@@ -462,11 +462,11 @@ else if(url.includes("https://hypixel.net/threads/"))
                                 networkLevel = " (Level: "+info.substring(info.indexOf("NetworkLevel:")+13,info.indexOf("¤"))+")";
                             }
                             innerB = usernamePrint+networkLevel+" is "+banType+"banned for "+banDuration+"\""+banReasonInfo+"\"."+"<div style='display: block; margin:0;padding:0;'>"+BDateB+" "+BByB+"</div>";
-                            if(info.includes("[G]"))
+                            if(info.toLowerCase().includes("[g]"))
                             {
                                 $("<div style='height: 40px; margin: 0 10px 0 10px; display: flex; flex-direction: column; justify-content: center; text-align: center;'><div class='punishmentStatusButton' style='height: 30px; width:140px; padding 1px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: #000;color:#fff; border-radius:3px;cursor:pointer;' onclick='window.open(\"https://goliath.hypixel.net/reportslookup?username="+usernamePrint+"\")'>Check chatreports</div></div>").insertAfter(".messageList:first");
                             }
-                            else if(info.includes("[F]"))
+                            else if(info.toLowerCase().includes("[f]"))
                             {
                                 $("<div style='height: 40px; margin: 0 10px 0 10px; display: flex; flex-direction: column; justify-content: center; text-align: center;'><div class='punishmentStatusButton' style='height: 30px; width:140px; padding 1px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: #000;color:#fff; border-radius:3px;cursor:pointer;')'>Check forum reports</div></div>").insertAfter(".messageList:first");
                                 document.getElementsByClassName('punishmentStatusButton')[0].addEventListener('click', openSearch, false);
@@ -506,11 +506,11 @@ else if(url.includes("https://hypixel.net/threads/"))
                             {
                                 networkLevelM = " (Level: "+info.substring(info.indexOf("NetworkLevel:")+13,info.indexOf("¤"))+")";
                             }
-                            if(info.includes("[G]"))
+                            if(info.toLowerCase().includes("[g]"))
                             {
                                 $("<div style='height: 40px; margin: 0 10px 0 10px; display: flex; flex-direction: column; justify-content: center; text-align: center;'><div class='punishmentStatusButton' style='height: 30px; width:140px; padding 1px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: #000;color:#fff; border-radius:3px;cursor:pointer;' onclick='window.open(\"https://goliath.hypixel.net/reportslookup?username="+usernamePrint+"\")'>Check chatreports</div></div>").insertAfter(".messageList:first");
                             }
-                            else if(info.includes("[F]"))
+                            else if(info.toLowerCase().includes("[f]"))
                             {
                                 $("<div style='height: 40px; margin: 0 10px 0 10px; display: flex; flex-direction: column; justify-content: center; text-align: center;'><div class='punishmentStatusButton' style='height: 30px; width:140px; padding 1px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: #000;color:#fff; border-radius:3px;cursor:pointer;')'>Check forum reports</div></div>").insertAfter(".messageList:first");
                                 document.getElementsByClassName('punishmentStatusButton')[0].addEventListener('click', openSearch, false);
