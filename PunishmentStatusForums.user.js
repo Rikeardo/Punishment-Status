@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Punishment status - Forums
-// @version      1.0.1
+// @version      1.0.2
 // @description  Check if a player is currently punished on the server from forums
 // @author       _Rikardo_
 // @icon         http://i.imgur.com/9gMGDnD.png
@@ -16,7 +16,7 @@
 var url = window.location.href;
 var usernamePrint = "";
 
-if(url.includes("https://goliath.hypixel.net/"))
+if(url.includes("https://goliath.hypixel.net/userinfo"))
 {
     setInterval(function()
                 {
@@ -547,16 +547,16 @@ else if(url.includes("https://hypixel.net/threads/"))
 if(url == "https://hypixel.net/search")
 {
     var cookieSearch = document.cookie;
-    if(cookieSearch.includes("forumSearch=")
-    {
-       var nameSearch = cookieSearch.substring(cookieSearch.indexOf("forumSearch=")+12,cookieSearch.indexOf("€^$"));
-       document.cookie = "forumSearch=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-       document.getElementById("ctrl_keywords").value = nameSearch;
-       var element = document.getElementById('ctrl_nodes');
-       element.value = "37";
-       form = document.getElementsByClassName("xenForm");
-       form[0].submit();
-    }
+    if(cookieSearch.includes("forumSearch="))
+       {
+           var nameSearch = cookieSearch.substring(cookieSearch.indexOf("forumSearch=")+12,cookieSearch.indexOf("€^$"));
+           document.cookie = "forumSearch=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+           document.getElementById("ctrl_keywords").value = nameSearch;
+           var element = document.getElementById('ctrl_nodes');
+           element.value = "37";
+           form = document.getElementsByClassName("xenForm");
+           form[0].submit();
+       }
 }
 
 // FUNCTIONS
@@ -572,7 +572,7 @@ function openSearch()
 }
 
 
-var version = 1.01;
+var version = 1.02;
 var forumUpdateRequest = new XMLHttpRequest();
 forumUpdateRequest.onreadystatechange = function() {
     if (forumUpdateRequest.readyState == XMLHttpRequest.DONE) {
