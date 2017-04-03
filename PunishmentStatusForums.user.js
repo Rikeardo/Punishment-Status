@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Punishment status - Forums
-// @version      1.0.4
+// @version      1.0.5
 // @description  Check if a player is currently punished on the server from forums
 // @author       _Rikardo_
 // @icon         http://i.imgur.com/9gMGDnD.png
@@ -16,7 +16,7 @@
 var url = window.location.href;
 var usernamePrint = "";
 
-var version = 1.04;
+var version = 1.05;
 var forumUpdateRequest = new XMLHttpRequest();
 forumUpdateRequest.onreadystatechange = function() {
     if (forumUpdateRequest.readyState == XMLHttpRequest.DONE) {
@@ -516,11 +516,11 @@ else if(url.includes("https://hypixel.net/threads/"))
                                 document.getElementsByClassName('punishmentStatusButton')[0].addEventListener('click', openSearch, false);
                             }
                             $("<style>.punishmentStatusButton:hover{padding:0;border: 1px solid #000;background-color:#fff!important;color:#000!important;}</style>").insertAfter("body:first");
-                            innerM = usernamePrint+networkLevelM+" is "+banType+"muted for "+muteDuration+"\""+muteReasonInfo+"\"."+"<div style='display: block; margin:0;padding:0;'>"+MDateM+" "+MByM+"</div>";
+                            innerM = usernamePrint+networkLevelM+" is muted for "+muteDuration+"\""+muteReasonInfo+"\"."+"<div style='display: block; margin:0;padding:0;'>"+MDateM+" "+MByM+"</div>";
                         }
                         else
                         {
-                            innerM= usernamePrint+" is "+banType+"banned for \""+muteReasonInfo+"\".";
+                            innerM= usernamePrint+" is muted for \""+muteReasonInfo+"\".";
                         }
 
                         $("<div style='height: 40px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: #ffb3b3;'>"+innerM+"</div>").insertAfter(".pageNavLinkGroup:first");
@@ -550,7 +550,7 @@ else if(url.includes("https://hypixel.net/threads/"))
     }, 200);
 
 }
-if(url.includes("https://hypixel.net/search"))
+if(url == "https://hypixel.net/search")
 {
     setInterval(function()
                 {
