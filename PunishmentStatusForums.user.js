@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Punishment status - Forums
-// @version      1.0.5
+// @version      1.0.6
 // @description  Check if a player is currently punished on the server from forums
 // @author       _Rikardo_
 // @icon         http://i.imgur.com/9gMGDnD.png
@@ -15,8 +15,9 @@
 // ==/UserScript==
 var url = window.location.href;
 var usernamePrint = "";
+var fullName = "";
 
-var version = 1.05;
+var version = 1.06;
 var forumUpdateRequest = new XMLHttpRequest();
 forumUpdateRequest.onreadystatechange = function() {
     if (forumUpdateRequest.readyState == XMLHttpRequest.DONE) {
@@ -416,6 +417,7 @@ else if(url.includes("https://hypixel.net/threads/"))
                 var endName = info.indexOf("'");
                 var usernameInfo = info.substring(0, endName);
                 usernamePrint = usernameInfo;
+                fullName = usernameInfo;
                 console.log(nameCurrent);
                 console.log(usernameInfo);
                 console.log(foundName1);
@@ -464,7 +466,7 @@ else if(url.includes("https://hypixel.net/threads/"))
                             innerB = usernamePrint+networkLevel+" is "+banType+"banned for "+banDuration+"\""+banReasonInfo+"\"."+"<div style='display: block; margin:0;padding:0;'>"+BDateB+" "+BByB+"</div>";
                             if(info.toLowerCase().includes("[g]"))
                             {
-                                $("<div style='height: 40px; margin: 0 10px 0 10px; display: flex; flex-direction: column; justify-content: center; text-align: center;'><div class='punishmentStatusButton' style='height: 30px; width:140px; padding 1px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: #000;color:#fff; border-radius:3px;cursor:pointer;' onclick='window.open(\"https://goliath.hypixel.net/reportslookup?username="+usernamePrint+"\")'>Check chatreports</div></div>").insertAfter(".messageList:first");
+                                $("<div style='height: 40px; margin: 0 10px 0 10px; display: flex; flex-direction: column; justify-content: center; text-align: center;'><div class='punishmentStatusButton' style='height: 30px; width:140px; padding 1px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: #000;color:#fff; border-radius:3px;cursor:pointer;' onclick='window.open(\"https://goliath.hypixel.net/reportslookup?username="+fullName+"\")'>Check chatreports</div></div>").insertAfter(".messageList:first");
                             }
                             else if(info.toLowerCase().includes("[f]"))
                             {
@@ -508,7 +510,7 @@ else if(url.includes("https://hypixel.net/threads/"))
                             }
                             if(info.toLowerCase().includes("[g]"))
                             {
-                                $("<div style='height: 40px; margin: 0 10px 0 10px; display: flex; flex-direction: column; justify-content: center; text-align: center;'><div class='punishmentStatusButton' style='height: 30px; width:140px; padding 1px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: #000;color:#fff; border-radius:3px;cursor:pointer;' onclick='window.open(\"https://goliath.hypixel.net/reportslookup?username="+usernamePrint+"\")'>Check chatreports</div></div>").insertAfter(".messageList:first");
+                                $("<div style='height: 40px; margin: 0 10px 0 10px; display: flex; flex-direction: column; justify-content: center; text-align: center;'><div class='punishmentStatusButton' style='height: 30px; width:140px; padding 1px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: #000;color:#fff; border-radius:3px;cursor:pointer;' onclick='window.open(\"https://goliath.hypixel.net/reportslookup?username="+fullName+"\")'>Check chatreports</div></div>").insertAfter(".messageList:first");
                             }
                             else if(info.toLowerCase().includes("[f]"))
                             {
@@ -576,7 +578,7 @@ function openSearch()
     var timeSearch = nowSearch.getTime();
     timeSearch += 10 * 1000;
     nowSearch.setTime(timeSearch);
-    document.cookie = "forumSearch="+usernamePrint+"€^$;expires="+nowSearch+";path=/";
+    document.cookie = "forumSearch="+fullName+"€^$;expires="+nowSearch+";path=/";
     window.open("https://hypixel.net/search");
 }
 
