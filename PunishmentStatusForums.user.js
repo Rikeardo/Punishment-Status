@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Punishment status - Forums
-// @version      1.0.6
+// @version      1.0.7
 // @description  Check if a player is currently punished on the server from forums
 // @author       _Rikardo_
 // @icon         http://i.imgur.com/9gMGDnD.png
@@ -17,7 +17,7 @@ var url = window.location.href;
 var usernamePrint = "";
 var fullName = "";
 
-var version = 1.06;
+var version = 1.07;
 var forumUpdateRequest = new XMLHttpRequest();
 forumUpdateRequest.onreadystatechange = function() {
     if (forumUpdateRequest.readyState == XMLHttpRequest.DONE) {
@@ -69,6 +69,11 @@ if(url.includes("https://goliath.hypixel.net/userinfo"))
                         var startBanCut = bans.indexOf("<br>");
                         var endBanCut = bans.indexOf("By:");
                         var cutBan = bans.substring(startBanCut+5, endBanCut);
+
+                        while (cutBan.includes('amp;'))
+                        {
+                            cutBan = cutBan.replace('amp;','');
+                        }
 
                         var endBanReason = cutBan.indexOf("<br>");
 
@@ -436,6 +441,7 @@ else if(url.includes("https://hypixel.net/threads/"))
                     if(info.includes("Banned:")&& info.includes("Muted:") === false)
                     {
                         var banReasonInfo = info.substring(info.indexOf("Banned:")+7, info.lastIndexOf(","));
+                        console.log(banReasonInfo);
 
                         if(info.includes("Type:"))
                         {
