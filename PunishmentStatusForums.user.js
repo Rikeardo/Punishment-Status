@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Punishment status - Forums
-// @version      1.0.7
+// @version      1.1.0
 // @description  Check if a player is currently punished on the server from forums
 // @author       _Rikardo_
 // @icon         http://i.imgur.com/9gMGDnD.png
@@ -12,12 +12,16 @@
 // @require      https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js
 // @grant        GM_xmlhttpRequest
 // @connect      api.mojang.com
+// @connect      sessionserver.mojang.com
 // ==/UserScript==
 var url = window.location.href;
 var usernamePrint = "";
 var fullName = "";
+var appeal = false;
+var uuid = "";
+var appealName = "";
 
-var version = 1.07;
+var version = 1.10;
 var forumUpdateRequest = new XMLHttpRequest();
 forumUpdateRequest.onreadystatechange = function() {
     if (forumUpdateRequest.readyState == XMLHttpRequest.DONE) {
@@ -197,8 +201,9 @@ else if(url.includes("https://hypixel.net/threads/"))
     var foundName2;
     var nameCurrent = 0;
 
-    if(document.getElementsByClassName("titleBar")[0].innerHTML.includes("Report Rule Breakers")||document.getElementsByClassName("titleBar")[0].innerHTML.includes("Ban Appeal"))
+    if(document.getElementsByClassName("titleBar")[0].innerHTML.includes("Report Rule Breakers"))
     {
+        appeal = false;
         var content = $('.messageText').html();
         var arr = content.split('\n');
         var number = 1;
@@ -214,7 +219,7 @@ else if(url.includes("https://hypixel.net/threads/"))
             {
                 currentFastCheck = currentFastCheck.replace(" ","");
             }
-            fastCheckSearches = ["newign","newname","mcname:","user:","username:","in-gamenameofplayer","in-gamenamesof","in-gamenamesof","ignofhacker","ignofthehacker","hackerign:","igns:","ign(","ingamename","hacker-","player:","players:","offender:","offenders:","playername","names:","name:","names-","name-","rulebreakers","rulebreaker","theruleviolator","ign:","ign-","in-game"];
+            fastCheckSearches = ["newign","newname","mcname:","user:","username:","in-gamenameofplayer","in-gamenamesof","in-gamenamesof","ignofhacker","ignofthehacker","hackerign:","igns:","ign(","ingamename","hacker:","hacker-","player:","players:","offender:","offenders:","playername","names:","name:","names-","name-","rulebreakers","rulebreaker","theruleviolator","ign:","ign-","in-game"];
             while(fastcheckInner_i+1 <= fastCheckSearches.length && stopFastcheck === false)
             {
                 if(currentFastCheck.includes(fastCheckSearches[fastcheckInner_i])&&currentFastCheck.includes("oldign")===false&&currentFastCheck.includes("oldname")===false)
@@ -241,7 +246,7 @@ else if(url.includes("https://hypixel.net/threads/"))
             }
             if(currentCheck.includes("reason:") === false && currentCheck.includes("reason-") === false && currentCheck.includes("hacks:") === false && currentCheck.includes("time:") === false && currentCheck.includes("typeofhacks:") === false && currentCheck.includes("offence:") === false && currentCheck.includes("rank:") === false  && currentCheck.includes("screenshotof") === false  && currentCheck.includes("whatisthereason") === false && currentCheck.includes("whywereyoubanned?") === false)
             {
-                getRemoved = ["<b>","</b>","<br>","</br>","<ul>","</ul>","<li>","</li>","<i>","</i>","'","hello,","violators","violator:","hackersin-game","in-gamenameofplayer","username:","oldign","newign","oldname","newname","in-gamenamesof","in-gamenamesof","nameof","hackerign:","ignofhacker","ignofthehacker","igns:","ign(s)","ign(","ingamename","ingame","hacker-","player:","players:","offender:","offenders:","mcname:","user:","playername","names:","name:","names-","name-","rulebreakers","rulebreaker","theruleviolator","ign:","ign-","ign*","in-game","[vip]","[vip+]","[mvp]","[mvp+]","name(s)","(s)name","(s)","n:",":","-","*","(",")","."];
+                getRemoved = ["<b>","</b>","<br>","</br>","<ul>","</ul>","<li>","</li>","<i>","</i>","'","hello,","violators","violator:","hackersin-game","in-gamenameofplayer","username:","oldign","newign","oldname","newname","in-gamenamesof","in-gamenamesof","nameof","hackerign:","ignofhacker","ignofthehacker","igns:","ign(s)","ign(","ingamename","ingame","hacker:","hacker-","player:","players:","offender:","offenders:","mcname:","user:","playername","names:","name:","names-","name-","rulebreakers","rulebreaker","theruleviolator","ign:","ign-","ign*","in-game","[vip]","[vip+]","[mvp]","[mvp+]","name(s)","(s)name","(s)","n:","1.",":","-","*","(",")","."];
                 var current_i = 0;
                 while(current_i+1 <= getRemoved.length)
                 {
@@ -308,91 +313,167 @@ else if(url.includes("https://hypixel.net/threads/"))
     }
 
 
+    if(document.getElementsByClassName("titleBar")[0].innerHTML.includes("Ban Appeal"))
+    {
+        appeal = true;
+        var content = $('.messageText').html();
+        var arr = content.split('\n');
+
+        appealName = arr[5].substring(13,arr[5].length-4);
+        nameContainer = appealName;
+        uuid = arr[6].substring(13,arr[6].length-4);
+        console.log("Name: "+appealName+"; UUID: "+uuid);
+
+        if(uuid.length === 0)
+        {
+            response = true;
+            $("<div style='height: 40px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: yellow;'>Could not find the proper uuid.</div>").insertAfter(".pageNavLinkGroup:first");
+        }
+
+
+        setTimeout(function()
+                   {
+            if(response === false)
+            {
+                $("<div style='height: 40px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: black; color:white;'>You dont seem to get an answer from Goliath. Forgot to open a userinfo page?</div>").insertAfter(".pageNavLinkGroup:first");
+            }
+        }, 15000);
+    }
+
+
     setInterval(function()
                 {
-        if(nameContainer.length > 0 && requesting === false)
+        if(appeal && requesting === false && nameContainer.length > 0)
         {
             requesting = true;
-            console.log("Single name");
+            console.log("appeal uuid");
             key = Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000;
             console.log(key);
             var now = new Date();
             var time = now.getTime();
             time += 10 * 1000;
             now.setTime(time);
-            foundName1 = nameContainer;
-            nameCurrent += 1;
+
             GM_xmlhttpRequest({
                 method: 'GET',
-                url: 'https://api.mojang.com/users/profiles/minecraft/'+nameContainer,
+                url: 'https://sessionserver.mojang.com/session/minecraft/profile/'+uuid,
                 headers: {
                     'User-agent': 'Mozilla/4.0 (compatible) Greasemonkey',
                     'Accept': 'application/atom+xml,application/xml,text/xml',
                 },
                 onload: function(responseDetails) {
                     var mojangResponse = responseDetails.responseText;
+                    mojangResponse = JSON.parse(mojangResponse);
                     console.log(mojangResponse);
-                    if(mojangResponse !== undefined && mojangResponse.includes("\"name\""))
+                    if(mojangResponse !== undefined && mojangResponse.name !== undefined)
                     {
-                        var mojangAnswer = mojangResponse.substring(mojangResponse.indexOf("\"id\"")+6);
-                        var mojangUUID = mojangAnswer.substring(0,mojangAnswer.indexOf("\""));
-                        console.log(mojangUUID);
-                        document.cookie = "banChecking"+key+"='"+mojangUUID+"END0FN4ME"+key+"; expires=" + now.toUTCString() + "; domain=.hypixel.net;path=/";
+                        document.cookie = "banChecking"+key+"='"+mojangResponse.id+"END0FN4ME"+key+"; expires=" + now.toUTCString() + "; domain=.hypixel.net;path=/";
                     }
                     else
                     {
+                        console.log(mojangResponse.error);
+                        if(mojangResponse.error !== undefined)
+                        {
+                            $("<div style='height: 40px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: yellow;'> Mojang: "+mojangResponse.errorMessage+"</div>").insertAfter(".pageNavLinkGroup:first");
+                        }
+                        else
+                        {
+                            $("<div style='height: 40px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: yellow;'>Could not find the proper name or the name is incorrect.</div>").insertAfter(".pageNavLinkGroup:first");
+
+                        }
                         response = true;
-                        $("<div style='height: 40px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: yellow;'>Could not find the proper name or the name is incorrect.</div>").insertAfter(".pageNavLinkGroup:first");
                     }
                 }
             });
 
             nameContainer = "";
         }
-        if(multi_i <= multi_names.length && requesting === false && multi_i < 3)
+        else
         {
-            key = Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000;
-            console.log(key);
-            var nowMulti = new Date();
-            var timeMulti = nowMulti.getTime();
-            timeMulti += 10 * 1000;
-            nowMulti.setTime(timeMulti);
-            requesting = true;
-            if(multi_i === 1)
+            if(nameContainer.length > 0 && requesting === false)
             {
-                foundName1 = multi_names[multi_i-1];
-            }
-            else
-            {
-                foundName2 = multi_names[multi_i-1];
-            }
+                requesting = true;
+                console.log("Single name");
+                key = Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000;
+                console.log(key);
+                var now = new Date();
+                var time = now.getTime();
+                time += 10 * 1000;
+                now.setTime(time);
+                foundName1 = nameContainer;
+                nameCurrent += 1;
+                GM_xmlhttpRequest({
+                    method: 'GET',
+                    url: 'https://api.mojang.com/users/profiles/minecraft/'+nameContainer,
+                    headers: {
+                        'User-agent': 'Mozilla/4.0 (compatible) Greasemonkey',
+                        'Accept': 'application/atom+xml,application/xml,text/xml',
+                    },
+                    onload: function(responseDetails) {
+                        var mojangResponse = responseDetails.responseText;
+                        console.log(mojangResponse);
+                        if(mojangResponse !== undefined && mojangResponse.includes("\"name\""))
+                        {
+                            var mojangAnswer = mojangResponse.substring(mojangResponse.indexOf("\"id\"")+6);
+                            var mojangUUID = mojangAnswer.substring(0,mojangAnswer.indexOf("\""));
+                            console.log(mojangUUID);
+                            document.cookie = "banChecking"+key+"='"+mojangUUID+"END0FN4ME"+key+"; expires=" + now.toUTCString() + "; domain=.hypixel.net;path=/";
+                        }
+                        else
+                        {
+                            response = true;
+                            $("<div style='height: 40px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: yellow;'>Could not find the proper name or the name is incorrect.</div>").insertAfter(".pageNavLinkGroup:first");
+                        }
+                    }
+                });
 
-            nameCurrent += 1;
-            GM_xmlhttpRequest({
-                method: 'GET',
-                url: 'https://api.mojang.com/users/profiles/minecraft/'+multi_names[multi_i-1],
-                headers: {
-                    'User-agent': 'Mozilla/4.0 (compatible) Greasemonkey',
-                    'Accept': 'application/atom+xml,application/xml,text/xml',
-                },
-                onload: function(responseDetailsD) {
-                    var mojangResponseD = responseDetailsD.responseText;
-                    console.log(mojangResponseD);
-                    if(mojangResponseD !== undefined && mojangResponseD.includes("\"name\""))
-                    {
-                        var mojangAnswerD = mojangResponseD.substring(mojangResponseD.indexOf("\"id\"")+6);
-                        var mojangUUIDD = mojangAnswerD.substring(0,mojangAnswerD.indexOf("\""));
-                        console.log(mojangUUIDD);
-                        document.cookie = "banChecking"+key+"='"+mojangUUIDD+"END0FN4ME"+key+"; expires=" + nowMulti.toUTCString() + "; domain=.hypixel.net;path=/";
-                    }
-                    else
-                    {
-                        response = true;
-                        $("<div style='height: 40px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: yellow;'>Could not find the proper name or the name is incorrect.</div>").insertAfter(".pageNavLinkGroup:first");
-                    }
+                nameContainer = "";
+            }
+            if(multi_i <= multi_names.length && requesting === false && multi_i < 3)
+            {
+                key = Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000;
+                console.log(key);
+                var nowMulti = new Date();
+                var timeMulti = nowMulti.getTime();
+                timeMulti += 10 * 1000;
+                nowMulti.setTime(timeMulti);
+                requesting = true;
+                if(multi_i === 1)
+                {
+                    foundName1 = multi_names[multi_i-1];
                 }
-            });
-            multi_i += 1;
+                else
+                {
+                    foundName2 = multi_names[multi_i-1];
+                }
+
+                nameCurrent += 1;
+                GM_xmlhttpRequest({
+                    method: 'GET',
+                    url: 'https://api.mojang.com/users/profiles/minecraft/'+multi_names[multi_i-1],
+                    headers: {
+                        'User-agent': 'Mozilla/4.0 (compatible) Greasemonkey',
+                        'Accept': 'application/atom+xml,application/xml,text/xml',
+                    },
+                    onload: function(responseDetailsD) {
+                        var mojangResponseD = responseDetailsD.responseText;
+                        console.log(mojangResponseD);
+                        if(mojangResponseD !== undefined && mojangResponseD.includes("\"name\""))
+                        {
+                            var mojangAnswerD = mojangResponseD.substring(mojangResponseD.indexOf("\"id\"")+6);
+                            var mojangUUIDD = mojangAnswerD.substring(0,mojangAnswerD.indexOf("\""));
+                            console.log(mojangUUIDD);
+                            document.cookie = "banChecking"+key+"='"+mojangUUIDD+"END0FN4ME"+key+"; expires=" + nowMulti.toUTCString() + "; domain=.hypixel.net;path=/";
+                        }
+                        else
+                        {
+                            response = true;
+                            $("<div style='height: 40px; margin: 0px; display: flex; flex-direction: column; justify-content: center; text-align: center; background-color: yellow;'>Could not find the proper name or the name is incorrect.</div>").insertAfter(".pageNavLinkGroup:first");
+                        }
+                    }
+                });
+                multi_i += 1;
+            }
         }
 
         var cookieAnswer = document.cookie;
@@ -459,6 +540,11 @@ else if(url.includes("https://hypixel.net/threads/"))
                         var innerB = "";
                         if(document.getElementsByClassName("titleBar")[0].innerHTML.includes("Ban Appeal"))
                         {
+                            if(appeal && fullName.toLowerCase() !== appealName.toLowerCase())
+                            {
+                                usernamePrint =  fullName + " (Goliath: "+appealName+")";
+                            }
+
                             var banDuration = "";
                             var networkLevel = "";
                             if(info.includes("€B"))
@@ -504,6 +590,11 @@ else if(url.includes("https://hypixel.net/threads/"))
                         var innerM = "";
                         if(document.getElementsByClassName("titleBar")[0].innerHTML.includes("Ban Appeal"))
                         {
+                            if(appeal && fullName.toLowerCase() !== appealName.toLowerCase())
+                            {
+                                usernamePrint =  fullName + " (Goliath: "+appealName+")";
+                            }
+
                             var muteDuration = "";
                             var networkLevelM = "";
                             if(info.includes("€M"))
