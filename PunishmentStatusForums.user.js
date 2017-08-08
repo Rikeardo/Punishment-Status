@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Punishment status - Forums
-// @version      1.1.0
+// @version      1.1.1
 // @description  Check if a player is currently punished on the server from forums
 // @author       _Rikardo_
 // @icon         http://i.imgur.com/9gMGDnD.png
@@ -21,7 +21,7 @@ var appeal = false;
 var uuid = "";
 var appealName = "";
 
-var version = 1.10;
+var version = 1.11;
 var forumUpdateRequest = new XMLHttpRequest();
 forumUpdateRequest.onreadystatechange = function() {
     if (forumUpdateRequest.readyState == XMLHttpRequest.DONE) {
@@ -78,7 +78,6 @@ if(url.includes("https://goliath.hypixel.net/userinfo"))
                         {
                             cutBan = cutBan.replace('amp;','');
                         }
-
                         var endBanReason = cutBan.indexOf("<br>");
 
                         var startTypeBan = cutBan.indexOf("Type:");
@@ -92,16 +91,17 @@ if(url.includes("https://goliath.hypixel.net/userinfo"))
 
                         if(banTypeG === "permanent")
                         {
+                            console.log(bans);
                             banType = "Type:permanently$";
                             var startByBans = bans.indexOf("By:");
-                            var endByBans = bans.indexOf("<br>\n<br>");
+                            var endByBans = bans.indexOf("</font>")+7;
                             byBans = "B"+bans.substring(startByBans,endByBans)+"£B ";
                         }
                         else if(banTypeG === "temporary")
                         {
                             banType = "Type:temporarily$";
                             var startByBans2 = bans.indexOf("By:");
-                            var endByBans2 = bans.indexOf("<br>\nExpires:");
+                            var endByBans2 = bans.indexOf("</font>")+7;
                             byBans = "B"+bans.substring(startByBans2,endByBans2)+"£B ";
 
                             var uncutLengthB = bans.substring(bans.indexOf("TempBan"),bans.indexOf("Date:"));
@@ -110,7 +110,7 @@ if(url.includes("https://goliath.hypixel.net/userinfo"))
                         }
                         console.log(byBans);
                         console.log(banType);
-                        banReason = "Banned:" + cutBan.substring(8, endBanReason)+",";
+                        banReason = "Banned:" + cutBan.substring(24, endBanReason)+",";
 
                         console.log(banReason);
                     }
@@ -121,7 +121,7 @@ if(url.includes("https://goliath.hypixel.net/userinfo"))
                         var cutMute = mutes.substring(startMuteCut+5, endMuteCut);
 
                         var endMuteReason = cutMute.indexOf("<br>");
-                        muteReason = "Muted:" + cutMute.substring(8, endMuteReason) + "&";
+                        muteReason = "Muted:" + cutMute.substring(24, endMuteReason) + "&";
                         console.log(muteReason);
 
                         var dateMutes = mutes.substring(mutes.indexOf("Date:"),mutes.length);
@@ -130,7 +130,7 @@ if(url.includes("https://goliath.hypixel.net/userinfo"))
                         console.log(dateMute);
 
                         var startByMutes = mutes.indexOf("By:");
-                        var endByMutes = mutes.indexOf("<br>\nExpires:");
+                        var endByMutes = mutes.indexOf("</font>")+7;
                         byMutes = "M"+mutes.substring(startByMutes,endByMutes)+"£M ";
                         console.log(byMutes);
                         var uncutLengthM = mutes.substring(mutes.indexOf("Mute by"),mutes.indexOf("Reason:")[1]);
@@ -141,14 +141,17 @@ if(url.includes("https://goliath.hypixel.net/userinfo"))
                     if(mutes.includes("Current Mute")||bans.includes("Current Ban"))
                     {
                         var userInfo = document.getElementsByClassName("uk-width-1-4")[0].innerHTML;
-                        networkLevel = "NetworkLevel:"+userInfo.substring(userInfo.indexOf("Network Level")+15,userInfo.indexOf("First Login")-9)+"¤";
+                        networkLevel = "NetworkLevel:"+userInfo.substring(userInfo.indexOf("Network Level")+15,userInfo.indexOf("First Login")-18)+"¤";
                         console.log(networkLevel);
                     }
                     var nowG = new Date();
                     var timeG = nowG.getTime();
                     timeG += 10 * 1000;
                     nowG.setTime(timeG);
-                    document.cookie = "answerBanChecking"+forumKeyLoaded+"='"+/([A-Za-z0-9_]{1,16})$/.exec($("#columnx > font:first-of-type").text())[1]+ "'"+banReason+dateBan+byBans+banType+lengthB+muteReason+dateMute+byMutes+lengthM+networkLevel+"END0FANSW3R; expires=" + nowG.toUTCString() +"; domain=.hypixel.net;path=/";
+                    var sendCookie = "answerBanChecking"+forumKeyLoaded+"='"+/([A-Za-z0-9_]{1,16})$/.exec($("#columnx > font:first-of-type").text())[1]+ "'"+banReason+dateBan+byBans+banType+lengthB+muteReason+dateMute+byMutes+lengthM+networkLevel+"END0FANSW3R; expires=" + nowG.toUTCString() +"; domain=.hypixel.net;path=/";
+
+                    console.log(sendCookie);
+                    document.cookie = sendCookie;
                 }
                 else
                 {
