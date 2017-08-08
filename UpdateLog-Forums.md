@@ -1,4 +1,7 @@
 # Punishment status Forums
+### Version 1.1.1
+* Fixed issues after Goliath being modified.
+
 ## Version 1.1
 * Changed for appeals due to format and Goliath features.
 
